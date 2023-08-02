@@ -5,7 +5,7 @@ export default {
     primary: "#C62E65",
     secondary: "#D63AF9",
     background: "#f5f5f5",
-    text: "#000000",
+    text: "#000",
 
     headerBg: "pink",
   },
