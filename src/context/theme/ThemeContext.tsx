@@ -1,22 +1,10 @@
 import { createContext, useState } from "react";
 import light from "../../styles/themes/light";
 import dark from "../../styles/themes/dark";
-
-interface Theme {
-  title: string;
-
-  colors: {
-    primary: string;
-    secondary: string;
-    background: string;
-    text: string;
-
-    headerBg: string;
-  };
-}
+import { DefaultTheme } from "styled-components";
 
 interface ThemeContext {
-  currentTheme: Theme;
+  currentTheme: DefaultTheme;
   toggleTheme: () => void;
 }
 
