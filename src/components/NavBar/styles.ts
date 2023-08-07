@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   gap: 1rem;
 
   @media (min-width: 768px) {
-    margin-left: 25rem;
+    margin-left: 13.5rem;
   }
 `;
 

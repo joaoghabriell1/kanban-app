@@ -6,8 +6,6 @@ import { HeaderTag } from "./styles";
 import Logo from "./Logo";
 
 const Header = () => {
-  const isMobile = useMediaQuery("(max-width:768px)");
-
   return (
     <HeaderTag>
       <Logo />

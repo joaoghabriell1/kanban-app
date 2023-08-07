@@ -1,6 +1,6 @@
 import { useThemeContext } from "../../context/theme/ThemeContext";
+import { useUIContext } from "../../context/ui/UiContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { Dispatch, SetStateAction } from "react";
 import showNavIcon from "../../assets/icon-eye-2.svg";
 import hideNavIcon from "../../assets/icon-eye.svg";
 import boardIcon from "../../assets/icon-board.svg";
@@ -19,10 +19,10 @@ import {
 } from "./styles";
 interface Props {
   showDesktopNavBar?: boolean;
-  toggleDesktopNavBar?: Dispatch<SetStateAction<boolean>>;
 }
 
-const NavBarContainer = ({ showDesktopNavBar, toggleDesktopNavBar }: Props) => {
+const NavBarContainer = ({ showDesktopNavBar }: Props) => {
+  const { toggleDesktopNavBar } = useUIContext();
   const { toggleTheme, currentTheme } = useThemeContext();
   const isMobile = useMediaQuery("(max-width:768px)");
 
@@ -63,13 +63,7 @@ const NavBarContainer = ({ showDesktopNavBar, toggleDesktopNavBar }: Props) => {
           />
           <img src={sumIcon} alt="moon icon" />
         </SwitchContainer>
-        <HideDesktopSideBarButton
-          onClick={() => {
-            if (toggleDesktopNavBar) {
-              toggleDesktopNavBar((prev) => !prev);
-            }
-          }}
-        >
+        <HideDesktopSideBarButton onClick={toggleDesktopNavBar}>
           <img src={hideNavIcon} alt="eyeicon" />
           Hide SideBar
         </HideDesktopSideBarButton>
@@ -77,9 +71,7 @@ const NavBarContainer = ({ showDesktopNavBar, toggleDesktopNavBar }: Props) => {
       {!showDesktopNavBar && !isMobile ? (
         <ShowDesktopSideBarButton
           onClick={() => {
-            if (toggleDesktopNavBar) {
-              toggleDesktopNavBar((prev) => !prev);
-            }
+            toggleDesktopNavBar();
           }}
         >
           <img src={showNavIcon} alt="eyeicon" />

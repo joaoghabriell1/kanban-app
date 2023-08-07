@@ -10,7 +10,7 @@ function App() {
   return (
     <ThemeProvider theme={currentTheme}>
       <GlobalStyles />
-      <Routes />;
+      <Routes />
     </ThemeProvider>
   );
 }

@@ -1,11 +1,13 @@
-import { useMediaQuery } from "../../hooks/useMediaQuery";
 import ToggleMobileNavButton from "./ToggleMobileNavButton";
+import { useUIContext } from "../../context/ui/UiContext";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 import NavBarContainer from "./NavBarContainer";
 import { Wrapper } from "./styles";
 import { useState } from "react";
+
 const NavBar = () => {
+  const { showDesktopNavBar } = useUIContext();
   const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
-  const [showDesktopNav, setShowDesktopNav] = useState<boolean>(true);
   const isMobile = useMediaQuery("(max-width:768px)");
 
   return (
@@ -14,10 +16,7 @@ const NavBar = () => {
       {isMobile && <ToggleMobileNavButton toggleMobileNav={setShowMobileNav} />}
       {isMobile && showMobileNav ? <NavBarContainer /> : null}
       {!isMobile ? (
-        <NavBarContainer
-          showDesktopNavBar={showDesktopNav}
-          toggleDesktopNavBar={setShowDesktopNav}
-        />
+        <NavBarContainer showDesktopNavBar={showDesktopNavBar} />
       ) : null}
     </Wrapper>
   );

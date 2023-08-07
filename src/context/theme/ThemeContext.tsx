@@ -14,7 +14,7 @@ interface ThemeProviderProps {
 }
 
 const ThemeContext = createContext<ThemeContext>({
-  currentTheme: light,
+  currentTheme: dark,
   toggleTheme: () => {},
 });
 
@@ -23,7 +23,7 @@ export const useThemeContext = () => {
 };
 
 export const ThemeContextProvider = ({ children }: ThemeProviderProps) => {
-  const [currentTheme, setTheme] = useState(light);
+  const [currentTheme, setTheme] = useState(dark);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev.title === "light" ? dark : light));
