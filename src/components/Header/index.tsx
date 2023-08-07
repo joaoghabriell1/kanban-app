@@ -1,12 +1,13 @@
-import { HeaderTag } from "./styles";
-import NavBar from "../NavBar/NavBar";
-import Logo from "./Logo";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import PrimaryButton from "../PrimaryButton";
 import EditButton from "../EditButton";
+import NavBar from "../NavBar/index";
+import { HeaderTag } from "./styles";
+import Logo from "./Logo";
 
 const Header = () => {
   const isMobile = useMediaQuery("(max-width:768px)");
+
   return (
     <HeaderTag>
       <Logo />

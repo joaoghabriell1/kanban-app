@@ -1,71 +1,22 @@
-import { useThemeContext } from "../../context/theme/ThemeContext";
-import downArrow from "../../assets/icon-down-arrow.svg";
-import boardIcon from "../../assets/icon-board.svg";
-import moonIcon from "../../assets/icon-moon.svg";
-import sumIcon from "../../assets/icon-sun.svg";
-import Switch from "react-switch";
 import styled from "styled-components";
 
 interface StyledLiProps {
-  activeLink: boolean;
+  activeLink?: boolean;
+  showDesktopNavBar?: boolean;
 }
 
-const NavBar = () => {
-  const { toggleTheme, currentTheme } = useThemeContext();
-
-  return (
-    <Wrapper>
-      <h3>Platform Launch</h3>
-      <img src={downArrow} alt="" />
-      <NavBarContainer>
-        <Header>
-          <h4>all boards(3)</h4>
-        </Header>
-        <Ul>
-          <Li activeLink={true}>
-            <img src={boardIcon} alt="board icon" />
-            Platform Launch
-          </Li>
-          <Li activeLink={false}>
-            <img src={boardIcon} alt="board icon" />
-            item
-          </Li>
-          <Li activeLink={false}>
-            <NewBoardButton>
-              <img src={boardIcon} alt="board icon" />
-              <span>+ Create New Board</span>
-            </NewBoardButton>
-          </Li>
-        </Ul>
-        <SwitchContainer>
-          <img src={moonIcon} alt="moon icon" />
-          <Switch
-            onChange={() => {
-              toggleTheme();
-            }}
-            checked={currentTheme.title === "light"}
-            checkedIcon={false}
-            uncheckedIcon={false}
-            height={20}
-            onColor="#6460c7"
-            offColor="#2a2854"
-          />
-          <img src={sumIcon} alt="moon icon" />
-        </SwitchContainer>
-      </NavBarContainer>
-    </Wrapper>
-  );
-};
-
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   flex: 1;
   margin-left: 1.5rem;
   display: flex;
   gap: 1rem;
-  position: relative;
+
+  @media (min-width: 768px) {
+    margin-left: 25rem;
+  }
 `;
 
-const NavBarContainer = styled.nav`
+export const NavBarWrapper = styled.nav<StyledLiProps>`
   min-width: 250px;
   min-height: 320px;
   padding: 1.6rem;
@@ -74,10 +25,20 @@ const NavBarContainer = styled.nav`
   position: absolute;
   background: ${(props) => props.theme.colors["bg-cards"]};
   box-shadow: 0px 0px 10px gray;
-  top: 100%;
+  top: 78px;
+  transition: left 0.25s;
+
+  @media (min-width: 769px) {
+    border-radius: 0;
+    left: ${(props) => (props.showDesktopNavBar ? "0" : "-265px")};
+    bottom: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
-const Header = styled.header`
+export const Header = styled.header`
   color: ${(props) => props.theme.colors["fc-text"]};
 
   h4 {
@@ -87,11 +48,12 @@ const Header = styled.header`
   }
 `;
 
-const Ul = styled.ul`
+export const Ul = styled.ul`
   margin-block: 2rem 3rem;
+  flex: 1;
 `;
 
-const Li = styled.li<StyledLiProps>`
+export const Li = styled.li<StyledLiProps>`
   display: flex;
   align-items: center;
   gap: 1.2rem;
@@ -120,7 +82,7 @@ const Li = styled.li<StyledLiProps>`
   }
 `;
 
-const NewBoardButton = styled.button`
+export const NewBoardButton = styled.button`
   img {
     width: 16px;
     height: 16px;
@@ -138,7 +100,7 @@ const NewBoardButton = styled.button`
   font-weight: bold;
 `;
 
-const SwitchContainer = styled.div`
+export const SwitchContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -153,4 +115,22 @@ const SwitchContainer = styled.div`
   }
 `;
 
-export default NavBar;
+export const HideDesktopSideBarButton = styled.button`
+  color: ${(props) => props.theme.colors["fc-text"]};
+  background: none;
+  border: 0;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 2.2rem 4.7rem;
+`;
+
+export const ShowDesktopSideBarButton = styled.button`
+  background: none;
+  border: 0;
+  position: absolute;
+  left: 0;
+  bottom: 5rem;
+  transition: all 1s;
+`;
