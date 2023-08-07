@@ -14,7 +14,7 @@ const colors = {
   "light-gray-200": "hsla(221, 69%, 94%, 1)",
   "light-gray-100": "hsla(220, 69%, 97%, 1)",
 
-  "pure-white": "hsla(221, 69%, 94%, 1)",
+  "pure-white": "hsla(0, 0%, 100%, 1)",
 
   red: "hsla(0, 78%, 63%, 1)",
   "light-red": "hsla(0, 100%, 80%, 1)",
