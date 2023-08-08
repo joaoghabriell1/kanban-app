@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useUIContext } from "../context/ui/UiContext";
+import { useUIContext } from "../../context/UI/UiContext";
 import styled from "styled-components";
 
 interface StyledProps {

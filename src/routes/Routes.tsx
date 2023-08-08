@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
-import Home from "../pages/home";
+import Home from "../pages/Home/Home";
+import Auth from "../pages/Auth/Auth";
 
 const Routes = () => {
   const router = createBrowserRouter([
@@ -9,6 +10,7 @@ const Routes = () => {
       element: <MainLayout />,
       children: [{ path: "/:paramsId?", element: <Home /> }],
     },
+    { path: "/auth", element: <Auth /> },
   ]);
 
   return <RouterProvider router={router} />;

@@ -2,7 +2,7 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 import styled from "styled-components";
 import logo from "../../assets/icon-logo.svg";
 import desktopLogo from "../../assets/icon-desktop-logo.svg";
-import { useThemeContext } from "../../context/theme/ThemeContext";
+import { useThemeContext } from "../../context/Theme/ThemeContext";
 
 interface StyledProps {
   theme: string;

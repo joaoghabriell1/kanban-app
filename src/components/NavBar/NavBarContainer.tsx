@@ -1,5 +1,6 @@
-import { useThemeContext } from "../../context/theme/ThemeContext";
-import { useUIContext } from "../../context/ui/UiContext";
+import { useThemeContext } from "../../context/Theme/ThemeContext";
+import { useAuthContext } from "../../context/Auth/AuthContext";
+import { useUIContext } from "../../context/UI/UiContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import showNavIcon from "../../assets/icon-eye-2.svg";
 import hideNavIcon from "../../assets/icon-eye.svg";
@@ -25,10 +26,18 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
   const { toggleDesktopNavBar } = useUIContext();
   const { toggleTheme, currentTheme } = useThemeContext();
   const isMobile = useMediaQuery("(max-width:768px)");
+  const { logOut } = useAuthContext();
 
   return (
     <>
       <NavBarWrapper showDesktopNavBar={showDesktopNavBar}>
+        <button
+          onClick={() => {
+            logOut();
+          }}
+        >
+          logout
+        </button>
         <Header>
           <h4>all boards(3)</h4>
         </Header>

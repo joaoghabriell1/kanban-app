@@ -1,5 +1,5 @@
 import ToggleMobileNavButton from "./ToggleMobileNavButton";
-import { useUIContext } from "../../context/ui/UiContext";
+import { useUIContext } from "../../context/UI/UiContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import NavBarContainer from "./NavBarContainer";
 import { Wrapper } from "./styles";

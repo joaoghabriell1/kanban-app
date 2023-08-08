@@ -1,4 +1,4 @@
-import ThemeContext from "./context/theme/ThemeContext.tsx";
+import ThemeContext from "./context/Theme/ThemeContext.tsx";
 import GlobalStyles from "./styles/GlobalStyles.ts";
 import { ThemeProvider } from "styled-components";
 import Routes from "./routes/Routes";
