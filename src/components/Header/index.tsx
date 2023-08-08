@@ -10,7 +10,7 @@ const Header = () => {
     <HeaderTag>
       <Logo />
       <NavBar />
-      <PrimaryButton text="+" disabled={true} />
+      <PrimaryButton width="50px" text="+" disabled={true} />
       <EditButton />
     </HeaderTag>
   );

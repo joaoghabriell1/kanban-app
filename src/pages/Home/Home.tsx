@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import NewBoardCard from "../../components/NewBoardCard";
 import { useUIContext } from "../../context/UI/UiContext";
 import styled from "styled-components";
 
@@ -7,10 +8,11 @@ interface StyledProps {
 }
 const Home = () => {
   const { showDesktopNavBar } = useUIContext();
-  const path = useParams();
 
   return (
-    <Wrapper navIsOpen={showDesktopNavBar}>{JSON.stringify(path)}</Wrapper>
+    <Wrapper navIsOpen={showDesktopNavBar}>
+      <NewBoardCard />
+    </Wrapper>
   );
 };
 

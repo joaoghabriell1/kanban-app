@@ -2,6 +2,7 @@ import { useThemeContext } from "../../context/Theme/ThemeContext";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useUIContext } from "../../context/UI/UiContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useBoards } from "../../hooks/useBoards";
 import showNavIcon from "../../assets/icon-eye-2.svg";
 import hideNavIcon from "../../assets/icon-eye.svg";
 import boardIcon from "../../assets/icon-board.svg";
@@ -18,15 +19,18 @@ import {
   Ul,
   Li,
 } from "./styles";
+
 interface Props {
   showDesktopNavBar?: boolean;
 }
 
 const NavBarContainer = ({ showDesktopNavBar }: Props) => {
-  const { toggleDesktopNavBar } = useUIContext();
   const { toggleTheme, currentTheme } = useThemeContext();
   const isMobile = useMediaQuery("(max-width:768px)");
+  const { toggleDesktopNavBar } = useUIContext();
   const { logOut } = useAuthContext();
+  const { data } = useBoards();
+  const totalBoards = data?.data?.reduce((total) => (total += 1), 0) || 0;
 
   return (
     <>
@@ -39,17 +43,18 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
           logout
         </button>
         <Header>
-          <h4>all boards(3)</h4>
+          <h4>all boards({totalBoards})</h4>
         </Header>
         <Ul>
-          <Li activeLink={true}>
-            <img src={boardIcon} alt="board icon" />
-            Platform Launch
-          </Li>
-          <Li activeLink={false}>
-            <img src={boardIcon} alt="board icon" />
-            item
-          </Li>
+          {data?.data?.map((board, index) => {
+            return (
+              <Li key={index}>
+                <img src={boardIcon} alt="board icon" />
+                Platform Launch
+                {board.title}
+              </Li>
+            );
+          })}
           <Li activeLink={false}>
             <NewBoardButton>
               <img src={boardIcon} alt="board icon" />
@@ -72,10 +77,12 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
           />
           <img src={sumIcon} alt="moon icon" />
         </SwitchContainer>
-        <HideDesktopSideBarButton onClick={toggleDesktopNavBar}>
-          <img src={hideNavIcon} alt="eyeicon" />
-          Hide SideBar
-        </HideDesktopSideBarButton>
+        {!isMobile && (
+          <HideDesktopSideBarButton onClick={toggleDesktopNavBar}>
+            <img src={hideNavIcon} alt="eyeicon" />
+            Hide SideBar
+          </HideDesktopSideBarButton>
+        )}
       </NavBarWrapper>
       {!showDesktopNavBar && !isMobile ? (
         <ShowDesktopSideBarButton

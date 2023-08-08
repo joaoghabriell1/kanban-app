@@ -1,5 +1,6 @@
 const colors = {
   "main-purple": "hsla(242, 48%, 58%, 1)",
+  "medium-purple": "hsla(242, 48%, 58%, 0.25)",
   "light-purple": "hsla(242, 100%, 82%, 1)",
   "very-light-purple": "hsla(242, 48%, 58%, 0.1)",
 

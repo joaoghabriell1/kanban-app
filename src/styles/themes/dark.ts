@@ -17,13 +17,14 @@ export default {
     "bg-main": colors["dark-gray-300"],
     "bg-cards": colors["dark-gray-200"],
     "bg-disabled-btns": colors["very-light-purple"],
+    "bg-active-sidebar-item": colors["main-purple"],
     "bg-primary-btn": colors["main-purple"],
     "bg-seconday-btn": colors["pure-white"],
     "bg-delete-btn": colors.red,
 
     //hover bg
     "hv-bg-primary-btn": colors["light-purple"],
-    "hv-bg-sidebar-item": colors["main-purple"],
+    "hv-bg-sidebar-item": colors["pure-white"],
     "hv-bg-delete-btn": colors["light-red"],
 
     //accent

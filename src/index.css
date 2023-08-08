@@ -44,6 +44,14 @@ ul {
   list-style: none;
 }
 
+input {
+  font-family: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
 button:hover {
   cursor: pointer;
 }

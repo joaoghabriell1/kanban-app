@@ -66,12 +66,25 @@ export const Li = styled.li<StyledLiProps>`
   border-bottom-right-radius: 100vh;
 
   background: ${(props) =>
-    props.activeLink ? props.theme.colors["hv-bg-sidebar-item"] : "inhirit"};
+    props.activeLink
+      ? props.theme.colors["bg-active-sidebar-item"]
+      : "inhirit"};
   color: ${(props) =>
     props.activeLink
       ? props.theme.colors["fc-active-sideber-item"]
       : props.theme.colors["fc-text"]};
 
+  &:hover {
+    background: ${(props) => props.theme.colors["hv-bg-sidebar-item"]};
+    color: ${(props) => props.theme.colors["fc-main-purple"]};
+    cursor: pointer;
+    img {
+      width: 16px;
+      height: 16px;
+      filter: invert(50%) sepia(5%) saturate(0%) hue-rotate(346deg)
+        brightness(96%) contrast(105%);
+    }
+  }
   img {
     width: 16px;
     height: 16px;

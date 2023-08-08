@@ -14,10 +14,12 @@ declare module "styled-components" {
       "bg-main": string;
       "bg-cards": string;
       "bg-disabled-btns": string;
+      "bg-active-sidebar-item": string;
       "bg-primary-btn": string;
       "bg-seconday-btn": string;
       "bg-delete-btn": string;
       "hv-bg-primary-btn": string;
+      "hv-bg-secondary-btn": string;
       "hv-bg-sidebar-item": string;
       "hv-bg-delete-btn": string;
       "fc-red": string;

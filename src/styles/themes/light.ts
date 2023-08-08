@@ -16,6 +16,7 @@ export default {
     //bg
     "bg-main": colors["light-gray-100"],
     "bg-cards": colors["pure-white"],
+    "bg-active-sidebar-item": colors["main-purple"],
     "bg-disabled-btns": colors["very-light-purple"],
     "bg-primary-btn": colors["main-purple"],
     "bg-seconday-btn": colors["very-light-purple"],
@@ -23,7 +24,8 @@ export default {
 
     //hover bg
     "hv-bg-primary-btn": colors["light-purple"],
-    "hv-bg-sidebar-item": colors["main-purple"],
+    "hv-bg-secondary-btn": colors["medium-purple"],
+    "hv-bg-sidebar-item": colors["very-light-purple"],
     "hv-bg-delete-btn": colors["light-red"],
 
     //accent

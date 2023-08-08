@@ -11,20 +11,22 @@ interface Props {
   disabled?: boolean;
 }
 
-const PrimaryButton = ({ text, disabled, width }: Props) => {
+const SecondaryButton = ({ onClick, text, disabled, width }: Props) => {
   return (
-    <Button width={width} disabled={disabled}>
+    <Button onClick={onClick} width={width} disabled={disabled}>
       {text}
     </Button>
   );
 };
 
+export default SecondaryButton;
+
 const Button = styled.button<StyledProps>`
-  color: ${(props) => props.theme.colors["fc-primary-button"]};
+  color: ${(props) => props.theme.colors["fc-secondary-button"]};
   background: ${(props) =>
     props.disabled
       ? props.theme.colors["bg-disabled-btns"]
-      : props.theme.colors["bg-primary-btn"]};
+      : props.theme.colors["bg-seconday-btn"]};
   line-height: 0;
   font-weight: bold;
   border: 0;
@@ -37,8 +39,6 @@ const Button = styled.button<StyledProps>`
   width: ${({ width }) => (width ? width : "100%")};
 
   &:hover {
-    background: ${(props) => props.theme.colors["hv-bg-primary-btn"]};
+    background: ${(props) => props.theme.colors["hv-bg-secondary-btn"]};
   }
 `;
-
-export default PrimaryButton;
