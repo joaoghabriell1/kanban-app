@@ -1,23 +1,34 @@
 import styled from "styled-components";
 
 interface Props {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
   label: string;
   placeholder: string;
   id: string;
 }
 
-const PrimaryInput = ({ label, placeholder, id }: Props) => {
+const PrimaryInput = ({ value, onChange, label, placeholder, id }: Props) => {
   return (
     <Container>
       <Label htmlFor={id}>{label}</Label>
-      <Input id={id} placeholder={placeholder} type="text" />
+      <Input
+        onChange={onChange}
+        value={value}
+        required
+        id={id}
+        placeholder={placeholder}
+        type="text"
+      />
     </Container>
   );
 };
 
 const Label = styled.label`
-  color: ${(props) => props.theme.colors["fc-text"]};
+  color: ${(props) => props.theme.colors["fc-headings"]};
   font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
 `;
 
 const Input = styled.input`
@@ -28,6 +39,7 @@ const Input = styled.input`
   outline: 0;
   border: 1px solid rgba(130, 143, 163, 0.25);
   background: none;
+  margin-bottom: 2.4rem;
   &::placeholder {
     opacity: 0.25;
   }

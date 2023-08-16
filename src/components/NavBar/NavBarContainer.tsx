@@ -1,13 +1,14 @@
 import { useThemeContext } from "../../context/Theme/ThemeContext";
 import { useAuthContext } from "../../context/Auth/AuthContext";
-import { useUIContext } from "../../context/UI/UiContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useUIContext } from "../../context/UI/UIContext";
 import { useBoards } from "../../hooks/useBoards";
 import showNavIcon from "../../assets/icon-eye-2.svg";
 import hideNavIcon from "../../assets/icon-eye.svg";
 import boardIcon from "../../assets/icon-board.svg";
 import moonIcon from "../../assets/icon-moon.svg";
 import sumIcon from "../../assets/icon-sun.svg";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Switch from "react-switch";
 import {
   HideDesktopSideBarButton,
@@ -27,11 +28,13 @@ interface Props {
 const NavBarContainer = ({ showDesktopNavBar }: Props) => {
   const { toggleTheme, currentTheme } = useThemeContext();
   const isMobile = useMediaQuery("(max-width:768px)");
-  const { toggleDesktopNavBar } = useUIContext();
+  const { toggleDesktopNavBar, toggleNewBoardModal, handleOpenNewBoardModal } =
+    useUIContext();
   const { logOut } = useAuthContext();
-  const { data } = useBoards();
-  const totalBoards = data?.data?.reduce((total) => (total += 1), 0) || 0;
-
+  const { dataArray } = useBoards();
+  const { boardId } = useParams();
+  const totalBoards = dataArray?.reduce((total) => (total += 1), 0) || 0;
+  const navigate = useNavigate();
   return (
     <>
       <NavBarWrapper showDesktopNavBar={showDesktopNavBar}>
@@ -46,16 +49,22 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
           <h4>all boards({totalBoards})</h4>
         </Header>
         <Ul>
-          {data?.data?.map((board, index) => {
+          {dataArray?.map((board, index) => {
             return (
               <Li key={index}>
                 <img src={boardIcon} alt="board icon" />
-                Platform Launch
                 {board.title}
+                <Link to={`/${board.apiKey}`}></Link>
               </Li>
             );
           })}
-          <Li activeLink={false}>
+          <Li
+            onClick={() => {
+              toggleNewBoardModal();
+              navigate(`/${boardId ? boardId : "-"}/addnewboard`);
+            }}
+            activeLink={false}
+          >
             <NewBoardButton>
               <img src={boardIcon} alt="board icon" />
               <span>+ Create New Board</span>
@@ -78,7 +87,11 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
           <img src={sumIcon} alt="moon icon" />
         </SwitchContainer>
         {!isMobile && (
-          <HideDesktopSideBarButton onClick={toggleDesktopNavBar}>
+          <HideDesktopSideBarButton
+            onClick={() => {
+              toggleDesktopNavBar();
+            }}
+          >
             <img src={hideNavIcon} alt="eyeicon" />
             Hide SideBar
           </HideDesktopSideBarButton>

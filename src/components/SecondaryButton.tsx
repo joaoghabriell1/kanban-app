@@ -13,7 +13,7 @@ interface Props {
 
 const SecondaryButton = ({ onClick, text, disabled, width }: Props) => {
   return (
-    <Button onClick={onClick} width={width} disabled={disabled}>
+    <Button type="button" onClick={onClick} width={width} disabled={disabled}>
       {text}
     </Button>
   );
@@ -37,6 +37,7 @@ const Button = styled.button<StyledProps>`
   align-items: center;
   margin-right: 1.6rem;
   width: ${({ width }) => (width ? width : "100%")};
+  margin-block: 2.4rem;
 
   &:hover {
     background: ${(props) => props.theme.colors["hv-bg-secondary-btn"]};

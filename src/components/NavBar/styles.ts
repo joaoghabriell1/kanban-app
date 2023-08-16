@@ -54,6 +54,7 @@ export const Ul = styled.ul`
 `;
 
 export const Li = styled.li<StyledLiProps>`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 1.2rem;
@@ -64,7 +65,10 @@ export const Li = styled.li<StyledLiProps>`
   padding-left: 1.5rem;
   border-top-right-radius: 100vh;
   border-bottom-right-radius: 100vh;
-
+  a {
+    position: absolute;
+    inset: 0;
+  }
   background: ${(props) =>
     props.activeLink
       ? props.theme.colors["bg-active-sidebar-item"]

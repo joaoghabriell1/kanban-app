@@ -8,7 +8,7 @@ const Routes = () => {
     {
       path: "/",
       element: <MainLayout />,
-      children: [{ path: "/:paramsId?", element: <Home /> }],
+      children: [{ path: "/:boardId?/:action?", element: <Home /> }],
     },
     { path: "/auth", element: <Auth /> },
   ]);

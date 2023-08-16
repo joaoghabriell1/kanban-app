@@ -1,4 +1,3 @@
-import { useMediaQuery } from "../../hooks/useMediaQuery";
 import PrimaryButton from "../PrimaryButton";
 import EditButton from "../EditButton";
 import NavBar from "../NavBar/index";
