@@ -2,14 +2,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
-interface Props {
-  onClick: () => void;
-}
-
-enum Actions {
-  addnewboard = "addnewboard",
-}
-
 const Backdrop = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
@@ -20,7 +12,7 @@ const Backdrop = () => {
 
   return (
     <>
-      <BackdropLayer onClick={handleClick}></BackdropLayer>;
+      <BackdropLayer onClick={handleClick}></BackdropLayer>
     </>
   );
 };

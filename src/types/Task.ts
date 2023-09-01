@@ -1,8 +1,9 @@
 import { Substask } from "./Subtask";
 
 export interface Task {
+  id: string;
   title: string;
-  body: string;
-  subtask: Substask[];
+  description: string;
+  subtasks: Substask[];
   status: string;
 }

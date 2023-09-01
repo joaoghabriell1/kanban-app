@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import cancelIcon from "../assets/icon-close.svg";
+import cancelIcon from "../../assets/icon-close.svg";
 
 interface StyledProps {
   $disabled: boolean | undefined;
@@ -7,8 +7,8 @@ interface StyledProps {
 
 interface Props {
   disabled?: boolean;
-  id: string;
-  value: string;
+  id?: string;
+  value?: string;
   onClick: (id: string) => void;
   onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
 }
@@ -29,7 +29,7 @@ const SecondaryInput = ({ disabled, onClick, value, id, onChange }: Props) => {
           $disabled={disabled}
           disabled={disabled}
           type="button"
-          onClick={() => onClick(id)}
+          onClick={() => onClick(id!)}
         >
           <img src={cancelIcon} alt="cancel input icon" />
         </Button>

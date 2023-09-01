@@ -27,6 +27,6 @@ const ModalContentWrapper = styled.div`
   border-radius: 6px;
   width: min(480px, 100% - 2rem);
   margin-inline: auto;
-  height: 500px;
+  min-height: 500px;
   padding: 3.2rem;
 `;

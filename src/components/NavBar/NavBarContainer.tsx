@@ -28,8 +28,7 @@ interface Props {
 const NavBarContainer = ({ showDesktopNavBar }: Props) => {
   const { toggleTheme, currentTheme } = useThemeContext();
   const isMobile = useMediaQuery("(max-width:768px)");
-  const { toggleDesktopNavBar, toggleNewBoardModal, handleOpenNewBoardModal } =
-    useUIContext();
+  const { toggleDesktopNavBar } = useUIContext();
   const { logOut } = useAuthContext();
   const { dataArray } = useBoards();
   const { boardId } = useParams();
@@ -60,7 +59,6 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
           })}
           <Li
             onClick={() => {
-              toggleNewBoardModal();
               navigate(`/${boardId ? boardId : "-"}/addnewboard`);
             }}
             activeLink={false}

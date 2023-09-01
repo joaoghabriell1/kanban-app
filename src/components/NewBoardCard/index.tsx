@@ -1,13 +1,12 @@
 import { useCreateNewBoard } from "../../hooks/useCreateNewBoard";
-import { useUIContext } from "../../context/UI/UIContext";
 import SecondaryButton from "../SecondaryButton";
 import { TailSpin } from "react-loader-spinner";
-import SecondaryInput from "../SecondaryInput";
+import SecondaryInput from "../Inputs/SecondaryInput";
 import PrimaryButton from "../PrimaryButton";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Column } from "../../types/Column";
 import { Board } from "../../types/Boards";
-import PrimaryInput from "../PrimaryInput";
+import PrimaryInput from "../Inputs/PrimaryInput";
 import styled from "styled-components";
 import { useState } from "react";
 import Modal from "../UI/Modal";
@@ -17,7 +16,7 @@ const NewBoardCard = () => {
   const [boardTitle, setBoardTitle] = useState<string>("");
   const [columns, setColumns] = useState<Column[]>([
     {
-      id: 1,
+      id: 0,
       title: "",
       tasks: [],
     },
