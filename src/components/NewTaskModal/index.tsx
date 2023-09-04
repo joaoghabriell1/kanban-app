@@ -11,7 +11,7 @@ import SecondaryInput from "../Inputs/SecondaryInput";
 import { useCreateNewTask } from "../../hooks/useCreateNewTask";
 import TextAreaDefaultInput from "../Inputs/TextAreaDefaultInput";
 
-const NewTaskBoard = () => {
+const NewTaskModal = () => {
   const { createNewTask, isLoading } = useCreateNewTask();
   const [columnId, setColumnId] = useState<{
     id: string;
@@ -170,4 +170,4 @@ const Heading = styled.legend`
   margin-bottom: 0.8rem;
 `;
 
-export default NewTaskBoard;
+export default NewTaskModal;

@@ -8,7 +8,12 @@ const Routes = () => {
     {
       path: "/",
       element: <MainLayout />,
-      children: [{ path: "/:boardId?/:action?", element: <Home /> }],
+      children: [
+        {
+          path: "/:boardId?/:action?/:currentColumnId?/:currentTaskId?",
+          element: <Home />,
+        },
+      ],
     },
     { path: "/auth", element: <Auth /> },
   ]);

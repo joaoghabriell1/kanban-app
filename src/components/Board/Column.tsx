@@ -1,17 +1,23 @@
 import { Column as ColumnType } from "../../types/Column";
+import { Task } from "../../types/Task";
 import styled from "styled-components";
 import TaskCard from "./TaskCard";
-import { Task } from "../../types/Task";
 
-const Column = ({ title, tasks }: ColumnType) => {
+const Column = ({ title, tasks, id }: ColumnType) => {
   let array: Task[] = [];
+
   if (tasks) {
-    array = Object.values(tasks);
+    for (let key in tasks) {
+      const task = {
+        ...tasks[key],
+        apiKey: key,
+      };
+      array.push(task);
+    }
   }
 
-  console.log(tasks);
-
   const numOfTasks = array?.length || 0;
+
   return (
     <>
       <div>
@@ -19,10 +25,13 @@ const Column = ({ title, tasks }: ColumnType) => {
           - {title}({numOfTasks})
         </BoardTitle>
         <TasksUl>
-          {array?.map((task) => {
+          {array?.map((task, index) => {
             return (
               <TaskCard
+                key={index}
                 id={task.id}
+                apiKey={task.apiKey}
+                columnId={id}
                 title={task.title}
                 description={task.description}
                 subtasks={task.subtasks}
@@ -47,6 +56,11 @@ const BoardTitle = styled.h2`
 const TasksUl = styled.ul`
   display: grid;
   gap: 2rem;
+  max-height: 74vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default Column;

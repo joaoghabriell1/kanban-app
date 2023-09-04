@@ -1,6 +1,7 @@
 import { useUIContext } from "../../context/UI/UIContext";
-import NewBoardCard from "../../components/NewBoardCard";
-import NewTaskBoard from "../../components/NewTaskCard";
+import CurrentTaskModal from "../../components/CurrentTaskModal";
+import NewBoardModal from "../../components/NewBoardModal";
+import NewTaskModal from "../../components/NewTaskModal";
 import TasksBoard from "../../components/Board";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -16,8 +17,9 @@ const Home = () => {
   return (
     <Wrapper $navIsOpen={showDesktopNavBar}>
       <TasksBoard />
-      {action === "addnewboard" && <NewBoardCard />}
-      {action === "addnewtask" && <NewTaskBoard />}
+      {action === "addnewboard" && <NewBoardModal />}
+      {action === "addnewtask" && <NewTaskModal />}
+      {action === "managecurrenttask" && <CurrentTaskModal />}
     </Wrapper>
   );
 };

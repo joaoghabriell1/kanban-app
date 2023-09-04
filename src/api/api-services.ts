@@ -14,6 +14,17 @@ export const createNewBoard = (userId: string, data: Board) => {
   return ApiClient.post<{ name: string }>(`users/${userId}/boards.json`, data);
 };
 
+export const getTask = (
+  userId: string,
+  boardId: string,
+  columnId: string,
+  taskId: string
+) => {
+  return ApiClient.get<Task>(
+    `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}.json`
+  );
+};
+
 export const createNewTask = (
   userId: string,
   boardId: string,

@@ -3,6 +3,7 @@ import { SelectTag } from "./styles";
 import styled from "styled-components";
 import { useBoard } from "../../hooks/useBoard";
 import { useParams } from "react-router-dom";
+
 interface Props {
   onChange: (
     e: React.ChangeEvent<HTMLSelectElement> | null,
@@ -25,7 +26,6 @@ const SelectInput = ({ onChange }: Props) => {
         id: firstId,
         value: value,
       };
-      console.log(payload);
       onChange(null, payload);
     }
   }, [data]);

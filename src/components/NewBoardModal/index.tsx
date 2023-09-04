@@ -1,17 +1,17 @@
 import { useCreateNewBoard } from "../../hooks/useCreateNewBoard";
+import SecondaryInput from "../Inputs/SecondaryInput";
+import PrimaryInput from "../Inputs/PrimaryInput";
 import SecondaryButton from "../SecondaryButton";
 import { TailSpin } from "react-loader-spinner";
-import SecondaryInput from "../Inputs/SecondaryInput";
 import PrimaryButton from "../PrimaryButton";
 import { Navigate } from "react-router-dom";
 import { Column } from "../../types/Column";
 import { Board } from "../../types/Boards";
-import PrimaryInput from "../Inputs/PrimaryInput";
 import styled from "styled-components";
 import { useState } from "react";
 import Modal from "../UI/Modal";
 
-const NewBoardCard = () => {
+const NewBoardModal = () => {
   const { createNewBoard, ApiKeyResponse, isLoading } = useCreateNewBoard();
   const [boardTitle, setBoardTitle] = useState<string>("");
   const [columns, setColumns] = useState<Column[]>([
@@ -159,4 +159,4 @@ const Heading = styled.legend`
   margin-bottom: 0.8rem;
 `;
 
-export default NewBoardCard;
+export default NewBoardModal;
