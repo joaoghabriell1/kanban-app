@@ -1,10 +1,9 @@
-import { Substask } from "./Subtask";
+import { Subtask } from "./Subtask";
 
 export interface Task {
-  id: string;
   apiKey?: string;
   title: string;
   description: string;
-  subtasks: Substask[];
+  subtasks: Subtask[];
   status: string;
 }

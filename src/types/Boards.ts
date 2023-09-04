@@ -1,7 +1,7 @@
-import { Column } from "./Column";
+import { Columns } from "./Column";
 
 export type Board = {
   title: string;
-  apiKey: string;
-  columns: Column[];
+  apiKey?: string;
+  columns: Columns;
 };

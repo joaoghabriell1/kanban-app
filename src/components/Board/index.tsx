@@ -1,7 +1,7 @@
 import { useBoard } from "../../hooks/useBoard";
 import { useParams } from "react-router-dom";
-import Column from "./Column";
 import { ColumnsWrapper } from "./styles";
+import Column from "./Column";
 
 const TasksBoard = () => {
   const { boardId } = useParams();
@@ -10,11 +10,16 @@ const TasksBoard = () => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
+  let columns;
+
+  if (data?.data?.columns) {
+    columns = Object.values(data?.data?.columns);
+  }
 
   return (
     <>
       <ColumnsWrapper>
-        {data?.data?.columns?.map((column, index) => {
+        {columns?.map((column, index) => {
           return (
             <Column
               id={column.id}

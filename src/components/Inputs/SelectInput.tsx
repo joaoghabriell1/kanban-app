@@ -3,6 +3,7 @@ import { SelectTag } from "./styles";
 import styled from "styled-components";
 import { useBoard } from "../../hooks/useBoard";
 import { useParams } from "react-router-dom";
+import { Column } from "../../types/Column";
 
 interface Props {
   onChange: (
@@ -17,13 +18,18 @@ interface Props {
 const SelectInput = ({ onChange }: Props) => {
   const { boardId } = useParams();
   const { data } = useBoard(boardId);
+  let columns: Column[] | null = null;
+
+  if (data) {
+    columns = Object.values(data?.data?.columns!);
+  }
 
   useEffect(() => {
-    if (data?.data?.columns) {
-      const firstId = data?.data?.columns[0].id.toString();
-      const value = data?.data?.columns[0].title;
+    if (columns) {
+      const firstId = Object.values(columns).shift()?.id!;
+      const value = Object.values(columns).shift()?.title!;
       const payload = {
-        id: firstId,
+        id: firstId.toString(),
         value: value,
       };
       onChange(null, payload);
@@ -34,7 +40,7 @@ const SelectInput = ({ onChange }: Props) => {
     <>
       <Heading>Status (Column)</Heading>
       <SelectTag required onChange={onChange}>
-        {data?.data.columns.map((column) => (
+        {columns?.map((column) => (
           <Option
             key={column.id}
             value={column.title}

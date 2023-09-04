@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Substask } from "../../types/Subtask";
+import { Subtask } from "../../types/Subtask";
 
 import Modal from "../UI/Modal";
 import styled from "styled-components";
@@ -19,7 +19,7 @@ const NewTaskModal = () => {
   } | null>(null);
   const [taskTitle, setTaskTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [subtasks, setSubtaks] = useState<Substask[]>([
+  const [subtasks, setSubtaks] = useState<Subtask[]>([
     {
       id: 0,
       body: "",
@@ -93,7 +93,6 @@ const NewTaskModal = () => {
     e.preventDefault();
 
     const newTask = {
-      id: "0",
       title: taskTitle,
       description: description,
       subtasks: subtasks,

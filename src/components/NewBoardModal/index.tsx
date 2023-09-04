@@ -5,22 +5,25 @@ import SecondaryButton from "../SecondaryButton";
 import { TailSpin } from "react-loader-spinner";
 import PrimaryButton from "../PrimaryButton";
 import { Navigate } from "react-router-dom";
-import { Column } from "../../types/Column";
+import { Columns } from "../../types/Column";
 import { Board } from "../../types/Boards";
 import styled from "styled-components";
 import { useState } from "react";
 import Modal from "../UI/Modal";
+import { v4 as uuidv4 } from "uuid";
+
+const firstColumnId = uuidv4();
 
 const NewBoardModal = () => {
   const { createNewBoard, ApiKeyResponse, isLoading } = useCreateNewBoard();
   const [boardTitle, setBoardTitle] = useState<string>("");
-  const [columns, setColumns] = useState<Column[]>([
-    {
-      id: 0,
+  const [columns, setColumns] = useState<Columns>({
+    [firstColumnId]: {
+      id: firstColumnId,
       title: "",
       tasks: [],
     },
-  ]);
+  });
 
   const handlePrimaryInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -31,42 +34,41 @@ const NewBoardModal = () => {
     const { value, id } = e.currentTarget;
 
     setColumns((prev) => {
-      const newColumns = prev.map((column) => {
-        if (column.id === +id) {
-          return { ...column, title: value };
+      const newColumns = { ...prev };
+      for (let key in newColumns) {
+        if (columns[key].id.toString() === id) {
+          columns[key].title = value;
         }
-        return column;
-      });
+      }
       return newColumns;
     });
   };
 
   const addNewColumn = () => {
-    const newId = columns[columns.length - 1]?.id + 1 || 1;
-    const newColumn = {
-      id: newId,
-      title: "",
-      tasks: [],
-    };
+    const newId = uuidv4();
+
     setColumns((prev) => {
-      return [...prev, newColumn];
+      return { ...prev, [newId]: { id: newId, title: "", tasks: [] } };
     });
   };
 
   const handleDeleteColumn = (id: string) => {
     setColumns((prev) => {
-      const filteredColumns = prev.filter((column) => column.id !== +id);
-      return filteredColumns;
+      const newColumns = { ...prev };
+      delete newColumns[`${id}`];
+
+      return newColumns;
     });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const newBoard: Board = {
       title: boardTitle,
       columns: columns,
-      apiKey: "",
     };
+
     createNewBoard(newBoard);
   };
 
@@ -100,10 +102,10 @@ const NewBoardModal = () => {
           </Fieldset>
           <Fieldset>
             <Heading>Board Columns</Heading>
-            {columns.map((column, index) => {
+            {Object.values(columns).map((column, index) => {
               return (
                 <SecondaryInput
-                  disabled={columns.length === 1}
+                  disabled={Object.keys(columns).length === 1}
                   key={index}
                   value={column.title}
                   onClick={handleDeleteColumn}

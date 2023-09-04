@@ -1,16 +1,17 @@
-import { Substask } from "../../types/Subtask";
+import { Subtask } from "../../types/Subtask";
 import styled from "styled-components";
 
 interface StyledProps {
   $completed: boolean;
 }
-const SubtaskItem = ({ body, completed }: Substask) => {
+
+const SubtaskItem = ({ body, completed }: Subtask) => {
   return (
     <>
       <Li $completed={completed}>{body}</Li>
       <div>
         <input type="checkbox" id="scales" name="scales" />
-        <label htmlFor="scales">Scales</label>
+        <label>Scales</label>
       </div>
     </>
   );

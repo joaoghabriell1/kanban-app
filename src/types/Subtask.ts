@@ -1,4 +1,4 @@
-export interface Substask {
+export interface Subtask {
   id: number;
   body: string;
   completed: boolean;
