@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Subtask } from "../../types/Subtask";
+import { Subtasks } from "../../types/Subtask";
 
 import Modal from "../UI/Modal";
 import styled from "styled-components";
@@ -10,6 +10,9 @@ import PrimaryInput from "../Inputs/PrimaryInput";
 import SecondaryInput from "../Inputs/SecondaryInput";
 import { useCreateNewTask } from "../../hooks/useCreateNewTask";
 import TextAreaDefaultInput from "../Inputs/TextAreaDefaultInput";
+import { v4 as uuidv4 } from "uuid";
+
+const initalSubtaskId = uuidv4();
 
 const NewTaskModal = () => {
   const { createNewTask, isLoading } = useCreateNewTask();
@@ -19,13 +22,13 @@ const NewTaskModal = () => {
   } | null>(null);
   const [taskTitle, setTaskTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [subtasks, setSubtaks] = useState<Subtask[]>([
-    {
-      id: 0,
+  const [subtasks, setSubtasks] = useState<Subtasks>({
+    [initalSubtaskId]: {
+      id: initalSubtaskId,
       body: "",
       completed: false,
     },
-  ]);
+  });
 
   const handlePrimaryInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -35,14 +38,16 @@ const NewTaskModal = () => {
   const handleSecondaryInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, id } = e.currentTarget;
 
-    setSubtaks((prev) => {
-      const newSubTasks = prev.map((subtask) => {
-        if (subtask.id === +id) {
-          return { ...subtask, body: value };
+    setSubtasks((prev) => {
+      const newSubtasks = { ...prev };
+
+      for (let key in newSubtasks) {
+        if (newSubtasks[key].id.toString() === id) {
+          newSubtasks[key].body = value;
         }
-        return subtask;
-      });
-      return newSubTasks;
+      }
+
+      return newSubtasks;
     });
   };
 
@@ -54,21 +59,23 @@ const NewTaskModal = () => {
   };
 
   const addNewSubtask = () => {
-    const newId = subtasks[subtasks.length - 1]?.id + 1 || 1;
+    const newId = uuidv4();
     const newSubtask = {
       id: newId,
       body: "",
       completed: false,
     };
-    setSubtaks((prev) => {
-      return [...prev, newSubtask];
+
+    setSubtasks((prev) => {
+      return { ...prev, [newId]: newSubtask };
     });
   };
 
   const handleDeleteSubtask = (id: string) => {
-    setSubtaks((prev) => {
-      const filteredSubtasks = prev.filter((subtask) => subtask.id !== +id);
-      return filteredSubtasks;
+    setSubtasks((prev) => {
+      const newSubtasks = { ...prev };
+      delete newSubtasks[`${id}`];
+      return newSubtasks;
     });
   };
 
@@ -123,10 +130,10 @@ const NewTaskModal = () => {
         </Fieldset>
         <Fieldset>
           <Heading>Subtasks</Heading>
-          {subtasks.map((subtask) => (
+          {Object.values(subtasks).map((subtask) => (
             <SecondaryInput
               key={subtask.id}
-              disabled={subtasks.length === 1}
+              disabled={Object.values(subtasks).length === 1}
               onClick={handleDeleteSubtask}
               onChange={handleSecondaryInputChange}
               value={subtask.body}

@@ -36,8 +36,8 @@ const NewBoardModal = () => {
     setColumns((prev) => {
       const newColumns = { ...prev };
       for (let key in newColumns) {
-        if (columns[key].id.toString() === id) {
-          columns[key].title = value;
+        if (newColumns[key].id.toString() === id) {
+          newColumns[key].title = value;
         }
       }
       return newColumns;

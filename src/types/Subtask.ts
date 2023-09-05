@@ -1,5 +1,9 @@
 export interface Subtask {
-  id: number;
+  id: string;
   body: string;
   completed: boolean;
+}
+
+export interface Subtasks {
+  [key: string]: Subtask;
 }

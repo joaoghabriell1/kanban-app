@@ -1,19 +1,19 @@
-import { Substask } from "../../types/Subtask";
+import { Subtasks } from "../../types/Subtask";
 import SubtaskItem from "./SubtaskItem";
 import styled from "styled-components";
 
 interface Props {
-  subtasks: Substask[] | undefined;
+  subtasks: Subtasks | undefined;
 }
 
 const SubtasksList = ({ subtasks }: Props) => {
-  const completed_subtasks = subtasks?.reduce((total, task) => {
+  const completed_subtasks = Object.values(subtasks!)?.reduce((total, task) => {
     if (task.completed) {
       return (total += 1);
     }
     return total;
   }, 0);
-  const total_subtasks = subtasks!.length - 1 || 0;
+  const total_subtasks = Object.values(subtasks!).length - 1 || 0;
 
   return (
     <>
@@ -21,7 +21,7 @@ const SubtasksList = ({ subtasks }: Props) => {
         Subtasks ({completed_subtasks} of {total_subtasks})
       </Heading>
       <Ul>
-        {subtasks?.map((subtask, index) => {
+        {Object.values(subtasks!)?.map((subtask, index) => {
           return (
             <SubtaskItem
               completed={subtask.completed}
