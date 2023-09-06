@@ -3,17 +3,19 @@ import SubtaskItem from "./SubtaskItem";
 import styled from "styled-components";
 
 interface Props {
-  subtasks: Subtasks | undefined;
+  subtasks: Subtasks | Object;
+  onChange: (id: string) => void;
 }
 
-const SubtasksList = ({ subtasks }: Props) => {
+const SubtasksList = ({ subtasks, onChange }: Props) => {
   const completed_subtasks = Object.values(subtasks!)?.reduce((total, task) => {
     if (task.completed) {
       return (total += 1);
     }
     return total;
   }, 0);
-  const total_subtasks = Object.values(subtasks!).length - 1 || 0;
+
+  const total_subtasks = Object.values(subtasks!).length || 0;
 
   return (
     <>
@@ -24,6 +26,7 @@ const SubtasksList = ({ subtasks }: Props) => {
         {Object.values(subtasks!)?.map((subtask, index) => {
           return (
             <SubtaskItem
+              onChange={onChange}
               completed={subtask.completed}
               id={subtask.id}
               body={subtask.body}

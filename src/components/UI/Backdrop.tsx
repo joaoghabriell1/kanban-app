@@ -1,12 +1,15 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 const Backdrop = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleClick = () => {
+    queryClient.removeQueries({ queryKey: ["current-task"], exact: true });
     navigate(`/${boardId}`);
   };
 

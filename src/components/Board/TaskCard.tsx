@@ -8,7 +8,16 @@ interface Props {
 }
 const TaskCard = ({ title, subtasks, apiKey, columnId }: Task & Props) => {
   const { boardId } = useParams();
-  const totalSubtasks = subtasks.length;
+  const totalSubtasks = Object.values(subtasks).length;
+  const totalCompleted = Object.values(subtasks).reduce((total, subtask) => {
+    if (subtask.completed) {
+      return (total += 1);
+    }
+    return total;
+  }, 0);
+
+  console.log(subtasks);
+  console.log(Object.values(subtasks));
 
   return (
     <>
@@ -19,7 +28,9 @@ const TaskCard = ({ title, subtasks, apiKey, columnId }: Task & Props) => {
           }/managecurrenttask/${columnId}/${apiKey}`}
         >
           <H4>{title}</H4>
-          <P>0 of {totalSubtasks} subtasks</P>
+          <P>
+            {totalCompleted} of {totalSubtasks} subtasks
+          </P>
         </Link>
       </Li>
     </>

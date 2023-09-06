@@ -29,7 +29,6 @@ const Column = ({ title, tasks, id }: ColumnType) => {
             return (
               <TaskCard
                 key={index}
-                id={task.id}
                 apiKey={task.apiKey}
                 columnId={id}
                 title={task.title}

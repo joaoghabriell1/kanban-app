@@ -50,3 +50,27 @@ export const updateSubtasks = (
     data
   );
 };
+
+export const updateTaskandChangeColumn = (
+  userId: string,
+  boardId: string,
+  currentColumnId: string,
+  taskId: string,
+  newColumnId: string,
+  task: Task
+) => {
+  const delete_task_from_current_place = ApiClient.delete(
+    `users/${userId}/boards/${boardId}/columns/${currentColumnId}/tasks/${taskId}.json`
+  );
+  const realocate_task_to_other_column = ApiClient.post(
+    `users/${userId}/boards/${boardId}/columns/${newColumnId}/tasks.json`,
+    task
+  );
+
+  return Promise.all([
+    realocate_task_to_other_column,
+    delete_task_from_current_place,
+  ]);
+};
+
+export const updateTask = () => {};

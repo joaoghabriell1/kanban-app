@@ -15,8 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 const initalSubtaskId = uuidv4();
 
 const NewTaskModal = () => {
-  const { createNewTask, isLoading } = useCreateNewTask();
-  const [columnId, setColumnId] = useState<{
+  const { createNewTask, isLoading, data } = useCreateNewTask();
+  const [currentColumnStatus, setCurrentColumnsStatus] = useState<{
     id: string;
     value: string;
   } | null>(null);
@@ -87,13 +87,13 @@ const NewTaskModal = () => {
     }
   ) => {
     if (initial) {
-      setColumnId(initial);
+      setCurrentColumnsStatus(initial);
       return;
     }
 
     const { value } = e?.currentTarget!;
     const id = e?.currentTarget!.selectedOptions[0]!.getAttribute("id")!;
-    setColumnId({ id: id, value: value });
+    setCurrentColumnsStatus({ id: id, value: value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -103,10 +103,10 @@ const NewTaskModal = () => {
       title: taskTitle,
       description: description,
       subtasks: subtasks,
-      status: columnId?.value!,
+      status: currentColumnStatus?.value!,
     };
 
-    const payload = { columnId: columnId?.id!, task: newTask };
+    const payload = { columnId: currentColumnStatus?.id!, task: newTask };
     createNewTask(payload);
   };
 
@@ -143,7 +143,7 @@ const NewTaskModal = () => {
         </Fieldset>
         <SecondaryButton onClick={addNewSubtask} text="+ Add New Subtask" />
         <SelectInput onChange={handleColumnChange} />
-        <PrimaryButton text="Create Task" />
+        <PrimaryButton text={isLoading ? "Creating..." : "Create Task"} />
       </Form>
     </Modal>
   );
