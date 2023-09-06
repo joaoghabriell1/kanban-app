@@ -12,18 +12,23 @@ const Header = () => {
     navigate(`/${boardId ? boardId : "-"}/addnewtask`);
   };
 
+  const isHomePage = !boardId || boardId == "-";
   return (
     <HeaderTag>
       <Logo />
       <NavBar />
-      <PrimaryButton
-        onClick={addNewTaskHankder}
-        width="50px"
-        text="Add new Task"
-        mobileText="+"
-        disabled={true}
-      />
-      <EditButton />
+      {!isHomePage && (
+        <>
+          <PrimaryButton
+            onClick={addNewTaskHankder}
+            width="50px"
+            text="Add new Task"
+            mobileText="+"
+            disabled={true}
+          />
+          <EditButton />
+        </>
+      )}
     </HeaderTag>
   );
 };

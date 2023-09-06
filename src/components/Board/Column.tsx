@@ -38,7 +38,7 @@ const Column = ({ title, tasks, id }: ColumnType) => {
               />
             );
           })}
-          {numOfTasks === 0 && <p>Add new tasks to your columns</p>}
+          {numOfTasks === 0 && null}
         </TasksUl>
       </div>
     </>
@@ -50,6 +50,7 @@ const BoardTitle = styled.h2`
   color: ${(props) => props.theme.colors["fc-text"]};
   letter-spacing: 2.5px;
   margin-bottom: 2.4rem;
+  min-width: 28rem;
 `;
 
 const TasksUl = styled.ul`

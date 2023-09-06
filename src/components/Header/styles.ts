@@ -5,4 +5,5 @@ export const HeaderTag = styled.header`
   display: flex;
   align-items: center;
   padding: 2rem 1.5rem;
+  min-height: 7.8rem;
 `;

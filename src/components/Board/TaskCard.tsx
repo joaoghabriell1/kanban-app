@@ -16,17 +16,13 @@ const TaskCard = ({ title, subtasks, apiKey, columnId }: Task & Props) => {
     return total;
   }, 0);
 
-  console.log(subtasks);
-  console.log(Object.values(subtasks));
-
   return (
     <>
       <Li>
         <Link
           to={`/${
             boardId ? boardId : "-"
-          }/managecurrenttask/${columnId}/${apiKey}`}
-        >
+          }/managecurrenttask/${columnId}/${apiKey}`}>
           <H4>{title}</H4>
           <P>
             {totalCompleted} of {totalSubtasks} subtasks

@@ -1,4 +1,4 @@
-import { useUIContext } from "../../context/UI/UIContext";
+import { useUIContext } from "../../context/ui/UiContext";
 import CurrentTaskModal from "../../components/CurrentTaskModal";
 import NewBoardModal from "../../components/NewBoardModal";
 import NewTaskModal from "../../components/NewTaskModal";
@@ -12,7 +12,8 @@ interface StyledProps {
 
 const Home = () => {
   const { showDesktopNavBar } = useUIContext();
-  const { action } = useParams();
+  const { action, boardId } = useParams();
+  console.log(boardId);
 
   return (
     <Wrapper $navIsOpen={showDesktopNavBar}>

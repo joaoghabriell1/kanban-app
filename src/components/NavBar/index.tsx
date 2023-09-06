@@ -1,5 +1,5 @@
 import ToggleMobileNavButton from "./ToggleMobileNavButton";
-import { useUIContext } from "../../context/UI/UIContext";
+import { useUIContext } from "../../context/ui/UiContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import NavBarContainer from "./NavBarContainer";
 import { Wrapper } from "./styles";
@@ -17,7 +17,7 @@ const NavBar = () => {
 
   return (
     <Wrapper>
-      <h3>{title ? title : <>...</>}</h3>
+      <h3>{title ? title : null}</h3>
       {isMobile && <ToggleMobileNavButton toggleMobileNav={setShowMobileNav} />}
       {isMobile && showMobileNav ? <NavBarContainer /> : null}
       {!isMobile ? (
