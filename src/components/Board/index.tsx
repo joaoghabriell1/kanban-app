@@ -20,7 +20,7 @@ const TasksBoard = () => {
 
   return (
     <>
-      {!boardId || (boardId == "-" && <EmptyBoard />)}
+      {!boardId || boardId == "-" ? <EmptyBoard /> : null}
       <ColumnsWrapper>
         {columns?.map((column, index) => {
           return (

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 interface StyledLiProps {
-  activeLink?: boolean;
-  showDesktopNavBar?: boolean;
+  $activeLink?: boolean;
+  $showDesktopNavBar?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -30,7 +30,7 @@ export const NavBarWrapper = styled.nav<StyledLiProps>`
 
   @media (min-width: 769px) {
     border-radius: 0;
-    left: ${(props) => (props.showDesktopNavBar ? "0" : "-265px")};
+    left: ${(props) => (props.$showDesktopNavBar ? "0" : "-265px")};
     bottom: 0;
     box-shadow: none;
     display: flex;
@@ -70,11 +70,11 @@ export const Li = styled.li<StyledLiProps>`
     inset: 0;
   }
   background: ${(props) =>
-    props.activeLink
+    props.$activeLink
       ? props.theme.colors["bg-active-sidebar-item"]
       : "inhirit"};
   color: ${(props) =>
-    props.activeLink
+    props.$activeLink
       ? props.theme.colors["fc-active-sideber-item"]
       : props.theme.colors["fc-text"]};
 
@@ -93,9 +93,9 @@ export const Li = styled.li<StyledLiProps>`
     width: 16px;
     height: 16px;
     filter: ${(props) =>
-      props.activeLink
+      props.$activeLink
         ? "null"
-        : "invert(50%) sepia(5%) saturate(0%) hue-rotate(346deg) brightness(96%) contrast(105%);"};
+        : "  invert(45%) sepia(15%) saturate(419%) hue-rotate(177deg) brightness(90%) contrast(91%)"};
   }
 `;
 
@@ -103,8 +103,8 @@ export const NewBoardButton = styled.button`
   img {
     width: 16px;
     height: 16px;
-    filter: invert(45%) sepia(83%) saturate(468%) hue-rotate(203deg)
-      brightness(60%) contrast(91%);
+    filter: invert(62%) sepia(91%) saturate(643%) hue-rotate(209deg)
+      brightness(82%) contrast(89%);
     margin-right: 1rem;
   }
 

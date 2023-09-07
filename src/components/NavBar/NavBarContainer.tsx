@@ -1,7 +1,7 @@
 import { useThemeContext } from "../../context/Theme/ThemeContext";
 import { useAuthContext } from "../../context/Auth/AuthContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { useUIContext } from "../../context/UI/UIContext";
+import { useUIContext } from "../../context/ui/UiContext.tsx";
 import { useBoards } from "../../hooks/useBoards";
 import showNavIcon from "../../assets/icon-eye-2.svg";
 import hideNavIcon from "../../assets/icon-eye.svg";
@@ -36,7 +36,7 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
   const navigate = useNavigate();
   return (
     <>
-      <NavBarWrapper showDesktopNavBar={showDesktopNavBar}>
+      <NavBarWrapper $showDesktopNavBar={showDesktopNavBar}>
         <button
           onClick={() => {
             logOut();
@@ -50,10 +50,9 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
         <Ul>
           {dataArray?.map((board, index) => {
             return (
-              <Li key={index}>
+              <Li $activeLink={boardId === board.apiKey} key={index}>
                 <img src={boardIcon} alt="board icon" />
-                {board.title}
-                <Link to={`/${board.apiKey}`}></Link>
+                {board.title}a<Link to={`/${board.apiKey}`}></Link>
               </Li>
             );
           })}
@@ -61,7 +60,6 @@ const NavBarContainer = ({ showDesktopNavBar }: Props) => {
             onClick={() => {
               navigate(`/${boardId ? boardId : "-"}/addnewboard`);
             }}
-            activeLink={false}
           >
             <NewBoardButton>
               <img src={boardIcon} alt="board icon" />

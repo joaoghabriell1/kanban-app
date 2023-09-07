@@ -13,7 +13,6 @@ interface StyledProps {
 const Home = () => {
   const { showDesktopNavBar } = useUIContext();
   const { action, boardId } = useParams();
-  console.log(boardId);
 
   return (
     <Wrapper $navIsOpen={showDesktopNavBar}>

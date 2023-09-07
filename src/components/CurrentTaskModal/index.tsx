@@ -1,17 +1,20 @@
+import LoadingCurrentTaskModalSkeleton from "./loading-skeleton/LoadingCurrentTaskModalSkeleton";
+import { useUpdateAndRealocate } from "../../hooks/useUpdateAndRealocateTask";
+import useUpdateSubtasks from "../../hooks/useUpdateSubtasks";
 import { useGetTask } from "../../hooks/useCurrentTask";
 import SelectInput from "../Inputs/SelectInput";
 import { Subtasks } from "../../types/Subtask";
 import { useParams } from "react-router-dom";
 import PrimaryButton from "../PrimaryButton";
+import { useState, useEffect } from "react";
 import SubtasksList from "./SubtasksList";
+import { Task } from "../../types/Task";
 import styled from "styled-components";
 import Modal from "../UI/Modal";
-import { useState, useEffect } from "react";
-import { useUpdateAndRealocate } from "../../hooks/useUpdateAndRealocateTask";
-import { Task } from "../../types/Task";
 
 const CurrentTaskModal = () => {
   const { UpdateAndRealocate, realocating } = useUpdateAndRealocate();
+  const { updateSubtasks, updating } = useUpdateSubtasks();
   const [currentSubtasksStatus, setCurrentSubtasksStatus] = useState<Subtasks>(
     {}
   );
@@ -34,7 +37,11 @@ const CurrentTaskModal = () => {
   }, [data]);
 
   if (isLoading) {
-    return <Modal>Loading...</Modal>;
+    return (
+      <Modal>
+        <LoadingCurrentTaskModalSkeleton />
+      </Modal>
+    );
   }
 
   const handleSubtaskCompletedState = (id: string) => {
@@ -80,23 +87,33 @@ const CurrentTaskModal = () => {
         task: updatedTask,
       };
       UpdateAndRealocate(payload);
+      return;
     }
+    const updateSubtasksPayload = {
+      boardId: boardId!,
+      columnId: currentColumnId!,
+      taskId: currentTaskId!,
+      data: currentSubtasksStatus,
+    };
+    updateSubtasks(updateSubtasksPayload);
   };
 
   return (
-    <Modal>
-      <Title>{data?.title}</Title>
-      <Description>{data?.description}</Description>
-      <SubtasksList
-        onChange={handleSubtaskCompletedState}
-        subtasks={currentSubtasksStatus}
-      />
-      <SelectInput onChange={handleColumnChange} />
-      <PrimaryButton
-        onClick={handleConfirmChanges}
-        text={realocating ? "Applying Changes..." : "Confirm Changes"}
-      />
-    </Modal>
+    <>
+      <Modal>
+        <Title>{data?.title}</Title>
+        <Description>{data?.description}</Description>
+        <SubtasksList
+          onChange={handleSubtaskCompletedState}
+          subtasks={currentSubtasksStatus}
+        />
+        <SelectInput onChange={handleColumnChange} />
+        <PrimaryButton
+          onClick={handleConfirmChanges}
+          text={realocating ? "Applying Changes..." : "Confirm Changes"}
+        />
+      </Modal>
+    </>
   );
 };
 

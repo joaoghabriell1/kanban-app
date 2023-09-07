@@ -3,7 +3,7 @@ import styled from "styled-components";
 const EmptyBoard = () => {
   return (
     <Container>
-      <Message>Wellcome to your kanban task management app!</Message>
+      <Message>Welcome to your kanban task management app!</Message>
     </Container>
   );
 };

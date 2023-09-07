@@ -56,6 +56,7 @@ export const useUpdateAndRealocate = () => {
       ),
     {
       onSuccess: () => {
+        queryClient.removeQueries({ queryKey: ["current-task"], exact: true });
         queryClient.invalidateQueries(["boards", userID]);
         navigate(`/${boardId!}`);
       },

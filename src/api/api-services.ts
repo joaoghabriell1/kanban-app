@@ -1,4 +1,4 @@
-import { Subtask } from "../types/Subtask";
+import { Subtasks } from "../types/Subtask";
 import { Board } from "../types/Boards";
 import { Task } from "../types/Task";
 import ApiClient from "./api-client";
@@ -43,7 +43,7 @@ export const updateSubtasks = (
   boardId: string,
   columnId: string,
   taskId: string,
-  data: Subtask[]
+  data: Subtasks
 ) => {
   return ApiClient.patch(
     `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}/subtasks.json`,

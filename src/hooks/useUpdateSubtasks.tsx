@@ -1,13 +1,16 @@
 import { useAuthContext } from "../context/Auth/AuthContext";
 import { updateSubtasks } from "../api/api-services";
-import { Subtask } from "../types/Subtask";
+import { Subtasks } from "../types/Subtask";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
+import { useParams } from "react-router-dom";
 
 interface MutationParams {
   boardId: string;
   columnId: string;
   taskId: string;
-  data: Subtask[];
+  data: Subtasks;
 }
 
 export const updateSubtasksMutation = async (
@@ -15,7 +18,7 @@ export const updateSubtasksMutation = async (
   boardId: string,
   columnId: string,
   taskId: string,
-  data: Subtask[]
+  data: Subtasks
 ) => {
   const response = await updateSubtasks(
     userId,
@@ -28,19 +31,23 @@ export const updateSubtasksMutation = async (
 };
 const useUpdateSubtasks = () => {
   const { userID } = useAuthContext();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { boardId } = useParams();
 
   const {
     mutate: updateSubtasks,
-    data,
-    isLoading,
+    isLoading: updating,
     error,
   } = useMutation(
     ({ boardId, columnId, taskId, data }: MutationParams) => {
       return updateSubtasksMutation(userID!, boardId, columnId, taskId, data);
     },
     {
-      onSuccess: (e) => {
-        return console.log(e);
+      onSuccess: () => {
+        queryClient.invalidateQueries(["boards", userID]);
+        queryClient.removeQueries({ queryKey: ["current-task"], exact: true });
+        navigate(`/${boardId!}`);
       },
       onError: (e) => {
         console.log(e);
@@ -50,7 +57,7 @@ const useUpdateSubtasks = () => {
 
   return {
     updateSubtasks,
-    isLoading,
+    updating,
     error,
   };
 };
