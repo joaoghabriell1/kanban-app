@@ -1,9 +1,11 @@
+import LoadingColumn from "./loading-skeleton/LoadingColumn";
 import { useBoard } from "../../hooks/useBoard";
 import { useParams } from "react-router-dom";
+import { Column as ColumnType } from "../../types/Column";
 import { ColumnsWrapper } from "./styles";
 import EmptyBoard from "./EmptyBoard";
+import NewColumn from "../NewColumnButton";
 import Column from "./Column";
-import LoadingColumn from "./loading-skeleton/LoadingColumn";
 
 const TasksBoard = () => {
   const { boardId } = useParams();
@@ -12,7 +14,7 @@ const TasksBoard = () => {
   if (isLoading) {
     return <LoadingColumn />;
   }
-  let columns;
+  let columns: ColumnType[] = [];
 
   if (data?.data?.columns) {
     columns = Object.values(data?.data?.columns);
@@ -32,6 +34,7 @@ const TasksBoard = () => {
             />
           );
         })}
+        <NewColumn />
       </ColumnsWrapper>
     </>
   );

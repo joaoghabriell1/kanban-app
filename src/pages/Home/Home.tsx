@@ -1,5 +1,6 @@
 import { useUIContext } from "../../context/ui/UiContext";
 import CurrentTaskModal from "../../components/CurrentTaskModal";
+import NewColumnModal from "../../components/NewColumnModal";
 import NewBoardModal from "../../components/NewBoardModal";
 import NewTaskModal from "../../components/NewTaskModal";
 import TasksBoard from "../../components/Board";
@@ -18,6 +19,7 @@ const Home = () => {
     <Wrapper $navIsOpen={showDesktopNavBar}>
       <TasksBoard />
       {action === "addnewboard" && <NewBoardModal />}
+      {action === "addnewcolumn" && <NewColumnModal />}
       {action === "addnewtask" && <NewTaskModal />}
       {action === "managecurrenttask" && <CurrentTaskModal />}
     </Wrapper>

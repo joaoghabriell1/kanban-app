@@ -8,9 +8,9 @@ import { Navigate } from "react-router-dom";
 import { Columns } from "../../types/Column";
 import { Board } from "../../types/Boards";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Modal from "../UI/Modal";
-import { v4 as uuidv4 } from "uuid";
 
 const firstColumnId = uuidv4();
 

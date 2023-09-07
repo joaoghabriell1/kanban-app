@@ -1,4 +1,5 @@
 import { Subtasks } from "../types/Subtask";
+import { Column } from "../types/Column";
 import { Board } from "../types/Boards";
 import { Task } from "../types/Task";
 import ApiClient from "./api-client";
@@ -71,6 +72,17 @@ export const updateTaskandChangeColumn = (
     realocate_task_to_other_column,
     delete_task_from_current_place,
   ]);
+};
+
+export const createNewColumn = (
+  userId: string,
+  boardId: string,
+  data: Column
+) => {
+  return ApiClient.put(
+    `users/${userId}/boards/${boardId}/columns/${data.id}.json`,
+    data
+  );
 };
 
 export const updateTask = () => {};

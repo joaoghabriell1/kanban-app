@@ -4,11 +4,16 @@ import styled from "styled-components";
 
 interface Props {
   children: React.ReactNode;
+  heigth?: string;
 }
 
-const Modal = ({ children }: Props) => {
+interface StyledProps {
+  $height: string | undefined;
+}
+
+const Modal = ({ children, heigth }: Props) => {
   return createPortal(
-    <ModalContentWrapper>
+    <ModalContentWrapper $height={heigth}>
       <BackDropLayer />
       {children}
     </ModalContentWrapper>,
@@ -18,7 +23,7 @@ const Modal = ({ children }: Props) => {
 
 export default Modal;
 
-const ModalContentWrapper = styled.div`
+const ModalContentWrapper = styled.div<StyledProps>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,6 +32,6 @@ const ModalContentWrapper = styled.div`
   border-radius: 6px;
   width: min(480px, 100% - 2rem);
   margin-inline: auto;
-  min-height: 500px;
+  min-height: ${({ $height }) => ($height ? $height : "500px")};
   padding: 3.2rem;
 `;
