@@ -10,11 +10,14 @@ import { useState, useEffect } from "react";
 import SubtasksList from "./SubtasksList";
 import { Task } from "../../types/Task";
 import styled from "styled-components";
+import EditCard from "../EditComponentCard";
 import Modal from "../UI/Modal";
+import Heading from "./Heading";
 
 const CurrentTaskModal = () => {
   const { UpdateAndRealocate, realocating } = useUpdateAndRealocate();
   const { updateSubtasks, updating } = useUpdateSubtasks();
+  const [showEditCard, setShowEditCard] = useState<boolean>(false);
   const [currentSubtasksStatus, setCurrentSubtasksStatus] = useState<Subtasks>(
     {}
   );
@@ -98,10 +101,17 @@ const CurrentTaskModal = () => {
     updateSubtasks(updateSubtasksPayload);
   };
 
+  const toggleEditCard = () => {
+    setShowEditCard((prev) => {
+      return !prev;
+    });
+  };
+
   return (
     <>
       <Modal>
-        <Title>{data?.title}</Title>
+        <Heading onClick={toggleEditCard} title={data?.title} />
+        {showEditCard && <EditCard />}
         <Description>{data?.description}</Description>
         <SubtasksList
           onChange={handleSubtaskCompletedState}
@@ -116,10 +126,6 @@ const CurrentTaskModal = () => {
     </>
   );
 };
-
-const Title = styled.h3`
-  color: ${(props) => props.theme.colors["fc-headings"]};
-`;
 
 const Description = styled.p`
   color: ${(props) => props.theme.colors["fc-text"]};

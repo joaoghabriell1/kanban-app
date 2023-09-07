@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 interface StyledProps {
   width: string | undefined;
 }
@@ -10,8 +9,7 @@ interface Props {
   onClick?: () => void;
   disabled?: boolean;
 }
-
-const SecondaryButton = ({ onClick, text, disabled, width }: Props) => {
+const DeleteButton = ({ onClick, text, disabled, width }: Props) => {
   return (
     <Button type="button" onClick={onClick} width={width} disabled={disabled}>
       {text}
@@ -19,14 +17,12 @@ const SecondaryButton = ({ onClick, text, disabled, width }: Props) => {
   );
 };
 
-export default SecondaryButton;
-
 const Button = styled.button<StyledProps>`
-  color: ${(props) => props.theme.colors["fc-secondary-button"]};
+  color: #fff;
   background: ${(props) =>
     props.disabled
       ? props.theme.colors["bg-disabled-btns"]
-      : props.theme.colors["bg-seconday-btn"]};
+      : props.theme.colors["bg-delete-btn"]};
   line-height: 0;
   font-weight: bold;
   border: 0;
@@ -37,8 +33,8 @@ const Button = styled.button<StyledProps>`
   align-items: center;
   margin-right: 1.6rem;
   width: ${({ width }) => (width ? width : "100%")};
-
   &:hover {
     background: ${(props) => props.theme.colors["hv-bg-secondary-btn"]};
   }
 `;
+export default DeleteButton;

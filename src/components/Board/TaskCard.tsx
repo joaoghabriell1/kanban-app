@@ -22,7 +22,8 @@ const TaskCard = ({ title, subtasks, apiKey, columnId }: Task & Props) => {
         <Link
           to={`/${
             boardId ? boardId : "-"
-          }/managecurrenttask/${columnId}/${apiKey}`}>
+          }/managecurrenttask/${columnId}/${apiKey}`}
+        >
           <H4>{title}</H4>
           <P>
             {totalCompleted} of {totalSubtasks} subtasks

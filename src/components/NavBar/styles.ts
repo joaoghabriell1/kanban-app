@@ -49,8 +49,13 @@ export const Header = styled.header`
 `;
 
 export const Ul = styled.ul`
-  margin-block: 2rem 3rem;
+  margin-block: 2rem 0.8rem;
   flex: 1;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  margin-left: -1.6rem;
 `;
 
 export const Li = styled.li<StyledLiProps>`
@@ -62,7 +67,7 @@ export const Li = styled.li<StyledLiProps>`
   border: 0;
   font-size: var(--fs-15);
   margin-left: -1.5rem;
-  padding-left: 1.5rem;
+  padding-left: 3.2rem;
   border-top-right-radius: 100vh;
   border-bottom-right-radius: 100vh;
   a {

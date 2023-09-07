@@ -141,7 +141,9 @@ const NewTaskModal = () => {
             />
           ))}
         </Fieldset>
-        <SecondaryButton onClick={addNewSubtask} text="+ Add New Subtask" />
+        <MarginBox>
+          <SecondaryButton onClick={addNewSubtask} text="+ Add New Subtask" />
+        </MarginBox>
         <SelectInput onChange={handleColumnChange} />
         <PrimaryButton text={isLoading ? "Creating..." : "Create Task"} />
       </Form>
@@ -150,7 +152,9 @@ const NewTaskModal = () => {
 };
 
 const Form = styled.form``;
-
+const MarginBox = styled.div`
+  margin-block: 2.4rem;
+`;
 const Fieldset = styled.fieldset`
   display: flex;
   flex-direction: column;

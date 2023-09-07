@@ -115,7 +115,9 @@ const NewBoardModal = () => {
               );
             })}
           </Fieldset>
-          <SecondaryButton onClick={addNewColumn} text="+ Add New Column" />
+          <MarginBox>
+            <SecondaryButton onClick={addNewColumn} text="+ Add New Column" />
+          </MarginBox>
           <PrimaryButton text="Create New Board" />
         </Form>
       </Modal>
@@ -127,6 +129,10 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
+`;
+
+const MarginBox = styled.div`
+  margin-block: 2.4rem;
 `;
 
 const Fieldset = styled.fieldset`

@@ -21,9 +21,9 @@ const Column = ({ title, tasks, id }: ColumnType) => {
   return (
     <>
       <div>
-        <BoardTitle>
+        <ColumnTitle>
           - {title}({numOfTasks})
-        </BoardTitle>
+        </ColumnTitle>
         <TasksUl>
           {array?.map((task, index) => {
             return (
@@ -45,22 +45,26 @@ const Column = ({ title, tasks, id }: ColumnType) => {
   );
 };
 
-const BoardTitle = styled.h2`
+const ColumnTitle = styled.h2`
   text-transform: uppercase;
   color: ${(props) => props.theme.colors["fc-text"]};
   letter-spacing: 2.5px;
   margin-bottom: 2.4rem;
   min-width: 28rem;
+  white-space: nowrap;
 `;
 
 const TasksUl = styled.ul`
   display: grid;
   gap: 2rem;
   max-height: 74vh;
+  height: 100vh;
   overflow-y: scroll;
+  place-content: start;
   &::-webkit-scrollbar {
     display: none;
   }
+  padding-bottom: 2rem;
 `;
 
 export default Column;

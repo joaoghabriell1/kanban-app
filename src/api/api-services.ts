@@ -85,4 +85,15 @@ export const createNewColumn = (
   );
 };
 
+export const deleteTask = (
+  userId: string,
+  boardId: string,
+  columnId: string,
+  taskId: string
+) => {
+  return ApiClient.delete(
+    `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}.json`
+  );
+};
+
 export const updateTask = () => {};

@@ -25,7 +25,7 @@ const NewColumn = () => {
 const Container = styled.div<StyledProps>`
   min-width: 28rem;
   margin-top: 5.1rem;
-  height: 75vh;
+  height: 70vh;
   font-size: 2.2rem;
   display: flex;
   align-items: center;

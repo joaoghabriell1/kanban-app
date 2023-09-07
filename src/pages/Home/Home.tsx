@@ -1,11 +1,12 @@
-import { useUIContext } from "../../context/ui/UiContext";
+import DeleteComponentModal from "../../components/DeleteComponentModal";
 import CurrentTaskModal from "../../components/CurrentTaskModal";
 import NewColumnModal from "../../components/NewColumnModal";
 import NewBoardModal from "../../components/NewBoardModal";
+import { useUIContext } from "../../context/ui/UiContext";
 import NewTaskModal from "../../components/NewTaskModal";
 import TasksBoard from "../../components/Board";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 interface StyledProps {
   $navIsOpen: boolean;
@@ -13,7 +14,7 @@ interface StyledProps {
 
 const Home = () => {
   const { showDesktopNavBar } = useUIContext();
-  const { action, boardId } = useParams();
+  const { action } = useParams();
 
   return (
     <Wrapper $navIsOpen={showDesktopNavBar}>
@@ -22,6 +23,7 @@ const Home = () => {
       {action === "addnewcolumn" && <NewColumnModal />}
       {action === "addnewtask" && <NewTaskModal />}
       {action === "managecurrenttask" && <CurrentTaskModal />}
+      {action === ("deletetask" || "deleteboard") && <DeleteComponentModal />}
     </Wrapper>
   );
 };
