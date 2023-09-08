@@ -111,7 +111,7 @@ const CurrentTaskModal = () => {
     <>
       <Modal>
         <Heading onClick={toggleEditCard} title={data?.title} />
-        {showEditCard && <EditCard />}
+        {showEditCard && <EditCard right="1rem" />}
         <Description>{data?.description}</Description>
         <SubtasksList
           onChange={handleSubtaskCompletedState}

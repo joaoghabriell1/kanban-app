@@ -153,6 +153,7 @@ export const ShowDesktopSideBarButton = styled.button`
   border: 0;
   position: absolute;
   left: 0;
-  bottom: 5rem;
+  width: 58rem;
+  bottom: 9rem;
   transition: all 1s;
 `;

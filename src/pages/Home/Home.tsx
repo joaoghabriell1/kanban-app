@@ -23,7 +23,8 @@ const Home = () => {
       {action === "addnewcolumn" && <NewColumnModal />}
       {action === "addnewtask" && <NewTaskModal />}
       {action === "managecurrenttask" && <CurrentTaskModal />}
-      {action === ("deletetask" || "deleteboard") && <DeleteComponentModal />}
+      {action === "deletetask" && <DeleteComponentModal />}
+      {action === "deleteboard" && <DeleteComponentModal />}
     </Wrapper>
   );
 };

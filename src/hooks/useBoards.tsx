@@ -4,7 +4,7 @@ import { Board } from "../types/Boards";
 import { useQuery } from "react-query";
 
 const getAllBoardsMutation = async (id: string) => {
-  const response = await getAllBoards(id);
+  const response = await getAllBoards({ id: id });
   return response;
 };
 

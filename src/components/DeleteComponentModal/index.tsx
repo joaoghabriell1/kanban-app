@@ -5,10 +5,12 @@ import DeleteButton from "./DeleteButton";
 import styled from "styled-components";
 import Modal from "../UI/Modal";
 import useDeleteTask from "../../hooks/useDeleteTask";
+import useDeleteBoard from "../../hooks/useDeleteBoard";
 
 const DeleteComponentModal = () => {
   const { action, boardId, currentColumnId, currentTaskId } = useParams();
-  const { deleteTask, isLoading } = useDeleteTask();
+  const { deleteTask, isDeletingTask } = useDeleteTask();
+  const { deleteBoard, isDeletingBoard } = useDeleteBoard();
   const navigate = useNavigate();
 
   const isTask = action === "deletetask";
@@ -23,12 +25,15 @@ const DeleteComponentModal = () => {
         taskId: currentTaskId!,
       };
       deleteTask(payload);
+    } else {
+      deleteBoard();
     }
   };
 
   const handleCancel = () => {
     navigate(`/${boardId}`);
   };
+
   return (
     <Modal heigth="auto">
       <h4>Delete this {isTask ? "task" : "boad"}?</h4>
@@ -38,7 +43,7 @@ const DeleteComponentModal = () => {
       <ActionsContainer>
         <DeleteButton
           onClick={handleDelete}
-          text={isLoading ? "Deleting..." : "Delete"}
+          text={isDeletingTask || isDeletingBoard ? "Deleting..." : "Delete"}
         />
         <SecondaryButton onClick={handleCancel} text="Cancel" />
       </ActionsContainer>

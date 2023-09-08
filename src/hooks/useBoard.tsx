@@ -2,8 +2,8 @@ import { useAuthContext } from "../context/Auth/AuthContext";
 import { getBoard } from "../api/api-services";
 import { useQuery } from "react-query";
 
-const getBoardMutation = async (userID: string, boardID: string) => {
-  const response = await getBoard(userID, boardID);
+const getBoardMutation = async (userId: string, boardId: string) => {
+  const response = await getBoard({ userId, boardId });
   return response;
 };
 

@@ -2,7 +2,21 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const EditCard = () => {
+interface Props {
+  right?: string;
+  left?: string;
+  top?: string;
+  bottom?: string;
+}
+
+interface StyledProps {
+  $right?: string;
+  $left?: string;
+  $top?: string;
+  $bottom?: string;
+}
+
+const EditCard = ({ top, bottom, right, left }: Props) => {
   const { action, boardId, currentColumnId, currentTaskId } = useParams();
   const navigate = useNavigate();
 
@@ -15,11 +29,19 @@ const EditCard = () => {
   const handleDelete = () => {
     if (isTask) {
       navigate(`/${boardId}/deletetask/${currentColumnId}/${currentTaskId}`);
+      return;
     }
+
+    navigate(`/${boardId}/deleteboard`);
   };
 
   return (
-    <Container>
+    <Container
+      $top={top || "auto"}
+      $bottom={bottom || "auto"}
+      $right={right || "auto"}
+      $left={left || "auto"}
+    >
       <EditButton onClick={handleEdit}>
         Edit {isTask ? "Task" : "Board"}
       </EditButton>
@@ -43,10 +65,10 @@ const DeleteButton = styled.button`
   color: ${({ theme }) => theme.colors["fc-red"]};
   text-align: start;
 `;
-const Container = styled.div`
+const Container = styled.div<StyledProps>`
   position: absolute;
+  box-shadow: 1px 1px 7px #655d5d6c;
   background: ${({ theme }) => theme.colors["bg-main"]};
-  right: 1rem;
   min-width: 190px;
   display: flex;
   flex-direction: column;
@@ -56,6 +78,8 @@ const Container = styled.div`
   & button:hover {
     opacity: 0.8;
   }
+  inset: ${({ $top, $bottom, $left, $right }) =>
+    `${$top} ${$right} ${$bottom} ${$left}`};
 `;
 
 export default EditCard;

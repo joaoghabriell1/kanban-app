@@ -1,14 +1,15 @@
 import { useAuthContext } from "../context/Auth/AuthContext";
 import { getTask } from "../api/api-services";
 import { useQuery } from "react-query";
+import { getTaskPayload } from "../types/api-payloads";
 
-const getTaskMutation = async (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  taskId: string
-) => {
-  const response = await getTask(userId, boardId, columnId, taskId);
+const getTaskMutation = async ({
+  userId,
+  boardId,
+  columnId,
+  taskId,
+}: getTaskPayload) => {
+  const response = await getTask({ userId, boardId, columnId, taskId });
   return response;
 };
 
@@ -20,7 +21,8 @@ export const useGetTask = (
   const { userID } = useAuthContext();
   const { data, isLoading, error } = useQuery({
     queryKey: ["current-task"],
-    queryFn: () => getTaskMutation(userID!, boardId!, columnId!, taskId!),
+    queryFn: () =>
+      getTaskMutation({ userId: userID!, boardId, columnId, taskId }),
   });
 
   return {

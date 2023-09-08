@@ -1,4 +1,5 @@
 import { useAuthContext } from "../context/Auth/AuthContext";
+import { updateSubtasksPaylaod } from "../types/api-payloads";
 import { updateSubtasks } from "../api/api-services";
 import { Subtasks } from "../types/Subtask";
 import { useMutation } from "react-query";
@@ -13,20 +14,20 @@ interface MutationParams {
   data: Subtasks;
 }
 
-export const updateSubtasksMutation = async (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  taskId: string,
-  data: Subtasks
-) => {
-  const response = await updateSubtasks(
+export const updateSubtasksMutation = async ({
+  userId,
+  boardId,
+  columnId,
+  taskId,
+  data,
+}: updateSubtasksPaylaod) => {
+  const response = await updateSubtasks({
     userId,
     boardId,
     columnId,
     taskId,
-    data
-  );
+    data,
+  });
   return response;
 };
 const useUpdateSubtasks = () => {
@@ -41,7 +42,13 @@ const useUpdateSubtasks = () => {
     error,
   } = useMutation(
     ({ boardId, columnId, taskId, data }: MutationParams) => {
-      return updateSubtasksMutation(userID!, boardId, columnId, taskId, data);
+      return updateSubtasksMutation({
+        userId: userID!,
+        boardId,
+        columnId,
+        taskId,
+        data,
+      });
     },
     {
       onSuccess: () => {

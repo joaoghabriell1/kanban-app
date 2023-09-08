@@ -11,7 +11,7 @@ const createNewColumnMutation = async (
   boardId: string,
   data: Column
 ) => {
-  const response = await createNewColumn(userId, boardId, data);
+  const response = await createNewColumn({ userId, boardId, data });
   return response;
 };
 

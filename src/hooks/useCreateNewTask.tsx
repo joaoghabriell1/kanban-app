@@ -1,4 +1,5 @@
 import { useAuthContext } from "../context/Auth/AuthContext";
+import { createNewTaskPayload } from "../types/api-payloads";
 import { useMutation, useQueryClient } from "react-query";
 import { createNewTask } from "../api/api-services";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +11,13 @@ interface MutationPayload {
   task: Task;
 }
 
-const createNewTaskMutation = (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  data: Task
-) => {
-  const promise = createNewTask(userId, boardId, columnId, data);
+const createNewTaskMutation = ({
+  userId,
+  boardId,
+  columnId,
+  data,
+}: createNewTaskPayload) => {
+  const promise = createNewTask({ userId, boardId, columnId, data });
   return promise;
 };
 export const useCreateNewTask = () => {
@@ -32,7 +33,12 @@ export const useCreateNewTask = () => {
     isLoading,
   } = useMutation(
     ({ columnId, task }: MutationPayload) =>
-      createNewTaskMutation(userID!, boardId!, columnId, task),
+      createNewTaskMutation({
+        userId: userID!,
+        boardId: boardId!,
+        columnId,
+        data: task,
+      }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["boards", userID]);

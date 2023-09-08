@@ -3,14 +3,15 @@ import { deleteTask } from "../api/api-services";
 import { useAuthContext } from "../context/Auth/AuthContext";
 import { useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { deleteTaskPayload } from "../types/api-payloads";
 
-const deleteTaskMutation = async (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  taskId: string
-) => {
-  const response = await deleteTask(userId, boardId, columnId, taskId);
+const deleteTaskMutation = async ({
+  userId,
+  boardId,
+  columnId,
+  taskId,
+}: deleteTaskPayload) => {
+  const response = await deleteTask({ userId, boardId, columnId, taskId });
   return response;
 };
 
@@ -26,11 +27,16 @@ export const useDeleteTask = () => {
   const { boardId } = useParams();
   const {
     mutate: deleteTask,
-    isLoading,
+    isLoading: isDeletingTask,
     error,
   } = useMutation(
     ({ columnId, taskId }: MutationPayload) =>
-      deleteTaskMutation(userID!, boardId!, columnId!, taskId!),
+      deleteTaskMutation({
+        userId: userID!,
+        boardId: boardId!,
+        columnId,
+        taskId,
+      }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["boards", userID, boardId]);
@@ -44,7 +50,7 @@ export const useDeleteTask = () => {
 
   return {
     deleteTask,
-    isLoading,
+    isDeletingTask,
     error,
   };
 };

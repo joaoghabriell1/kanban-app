@@ -1,3 +1,4 @@
+import { updateTaskandChangeColumnPayload } from "../types/api-payloads";
 import { updateTaskandChangeColumn } from "../api/api-services";
 import { useAuthContext } from "../context/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -13,22 +14,22 @@ interface MutationParams {
   task: Task;
 }
 
-const updateAndRealocateTaskMutation = async (
-  userId: string,
-  boardId: string,
-  currentColumnId: string,
-  taskId: string,
-  newColumnId: string,
-  task: Task
-) => {
-  const response = await updateTaskandChangeColumn(
+const updateAndRealocateTaskMutation = async ({
+  userId,
+  boardId,
+  currentColumnId,
+  taskId,
+  newColumnId,
+  task,
+}: updateTaskandChangeColumnPayload) => {
+  const response = await updateTaskandChangeColumn({
     userId,
     boardId,
     currentColumnId,
     taskId,
     newColumnId,
-    task
-  );
+    task,
+  });
 
   return response;
 };
@@ -46,14 +47,14 @@ export const useUpdateAndRealocate = () => {
     error,
   } = useMutation(
     ({ boardId, currentColumnId, taskId, newColumnId, task }: MutationParams) =>
-      updateAndRealocateTaskMutation(
-        userID!,
-        boardId!,
+      updateAndRealocateTaskMutation({
+        userId: userID!,
+        boardId: boardId!,
         currentColumnId,
-        taskId!,
+        taskId: taskId!,
         newColumnId,
-        task
-      ),
+        task,
+      }),
     {
       onSuccess: () => {
         queryClient.removeQueries({ queryKey: ["current-task"], exact: true });

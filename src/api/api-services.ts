@@ -4,62 +4,75 @@ import { Board } from "../types/Boards";
 import { Task } from "../types/Task";
 import ApiClient from "./api-client";
 
-export const getAllBoards = (id: string) => {
+import {
+  getAllBoardsPayload,
+  getBoardPayload,
+  createNewBoardPayload,
+  getTaskPayload,
+  createNewTaskPayload,
+  updateSubtasksPaylaod,
+  updateTaskandChangeColumnPayload,
+  createNewColumnPayload,
+  deleteTaskPayload,
+  deleteBoardPayload,
+} from "../types/api-payloads";
+
+export const getAllBoards = ({ id }: getAllBoardsPayload) => {
   return ApiClient.get<Board[]>(`users/${id}/boards.json`);
 };
 
-export const getBoard = (userID: string, boardID: string) => {
-  return ApiClient.get<Board>(`users/${userID}/boards/${boardID}.json`);
+export const getBoard = ({ userId, boardId }: getBoardPayload) => {
+  return ApiClient.get<Board>(`users/${userId}/boards/${boardId}.json`);
 };
 
-export const createNewBoard = (userId: string, data: Board) => {
+export const createNewBoard = ({ userId, data }: createNewBoardPayload) => {
   return ApiClient.post<{ name: string }>(`users/${userId}/boards.json`, data);
 };
 
-export const getTask = (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  taskId: string
-) => {
+export const getTask = ({
+  userId,
+  boardId,
+  columnId,
+  taskId,
+}: getTaskPayload) => {
   return ApiClient.get<Task>(
     `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}.json`
   );
 };
 
-export const createNewTask = (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  data: Task
-) => {
+export const createNewTask = ({
+  userId,
+  boardId,
+  columnId,
+  data,
+}: createNewTaskPayload) => {
   return ApiClient.post(
     `users/${userId}/boards/${boardId}/columns/${columnId}/tasks.json`,
     data
   );
 };
 
-export const updateSubtasks = (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  taskId: string,
-  data: Subtasks
-) => {
+export const updateSubtasks = ({
+  userId,
+  boardId,
+  columnId,
+  taskId,
+  data,
+}: updateSubtasksPaylaod) => {
   return ApiClient.patch(
     `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}/subtasks.json`,
     data
   );
 };
 
-export const updateTaskandChangeColumn = (
-  userId: string,
-  boardId: string,
-  currentColumnId: string,
-  taskId: string,
-  newColumnId: string,
-  task: Task
-) => {
+export const updateTaskandChangeColumn = ({
+  userId,
+  boardId,
+  currentColumnId,
+  taskId,
+  newColumnId,
+  task,
+}: updateTaskandChangeColumnPayload) => {
   const delete_task_from_current_place = ApiClient.delete(
     `users/${userId}/boards/${boardId}/columns/${currentColumnId}/tasks/${taskId}.json`
   );
@@ -74,26 +87,28 @@ export const updateTaskandChangeColumn = (
   ]);
 };
 
-export const createNewColumn = (
-  userId: string,
-  boardId: string,
-  data: Column
-) => {
+export const createNewColumn = ({
+  userId,
+  boardId,
+  data,
+}: createNewColumnPayload) => {
   return ApiClient.put(
     `users/${userId}/boards/${boardId}/columns/${data.id}.json`,
     data
   );
 };
 
-export const deleteTask = (
-  userId: string,
-  boardId: string,
-  columnId: string,
-  taskId: string
-) => {
+export const deleteTask = ({
+  userId,
+  boardId,
+  columnId,
+  taskId,
+}: deleteTaskPayload) => {
   return ApiClient.delete(
     `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}.json`
   );
 };
 
-export const updateTask = () => {};
+export const deleteBoard = ({ userId, boardId }: deleteBoardPayload) => {
+  return ApiClient.delete(`users/${userId}/boards/${boardId}.json`);
+};

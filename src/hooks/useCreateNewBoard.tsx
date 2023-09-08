@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { createNewBoard } from "../api/api-services";
 import { Board } from "../types/Boards";
 
-const createNewBoardMutation = (id: string, data: Board) => {
-  const response = createNewBoard(id, data);
+const createNewBoardMutation = (userId: string, data: Board) => {
+  const response = createNewBoard({ userId, data });
   return response;
 };
 
