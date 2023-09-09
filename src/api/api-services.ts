@@ -14,6 +14,7 @@ import {
   deleteTaskPayload,
   deleteBoardPayload,
   EditTaskPayload,
+  EditBoardPayload,
 } from "../types/api-payloads";
 
 export const getAllBoards = ({ id }: getAllBoardsPayload) => {
@@ -112,7 +113,7 @@ export const deleteBoard = ({ userId, boardId }: deleteBoardPayload) => {
   return ApiClient.delete(`users/${userId}/boards/${boardId}.json`);
 };
 
-export const EditTask = ({
+export const editTask = ({
   userId,
   boardId,
   columnId,
@@ -123,4 +124,8 @@ export const EditTask = ({
     `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}.json`,
     data
   );
+};
+
+export const editBoard = ({ userId, boardId, data }: EditBoardPayload) => {
+  return ApiClient.put(`users/${userId}/boards/${boardId}.json`, data);
 };

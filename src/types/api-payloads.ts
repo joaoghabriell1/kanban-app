@@ -72,3 +72,9 @@ export interface EditTaskPayload {
   taskId: string;
   data: Task;
 }
+
+export interface EditBoardPayload {
+  userId: string;
+  boardId: string;
+  data: Board;
+}

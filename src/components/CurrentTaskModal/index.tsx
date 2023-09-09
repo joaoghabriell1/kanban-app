@@ -1,5 +1,6 @@
 import LoadingCurrentTaskModalSkeleton from "./loading-skeleton/LoadingCurrentTaskModalSkeleton";
 import useUpdateSubtasks from "../../hooks/useUpdateSubtasks";
+import useOutsideClick from "../../hooks/useOutsideClick";
 import SelectInput from "../Inputs/SelectInput";
 import PrimaryButton from "../PrimaryButton";
 import EditCard from "../EditComponentCard";
@@ -7,7 +8,6 @@ import SubtasksList from "./SubtasksList";
 import styled from "styled-components";
 import Heading from "./Heading";
 import Modal from "../UI/Modal";
-
 import { useUpdateAndRealocate } from "../../hooks/useUpdateAndRealocateTask";
 import { useGetTask } from "../../hooks/useCurrentTask";
 import { Subtasks } from "../../types/Subtask";
@@ -16,9 +16,10 @@ import { useState, useEffect } from "react";
 import { Task } from "../../types/Task";
 
 const CurrentTaskModal = () => {
+  const ref = useOutsideClick({ callback: handleClickOutside });
+  const [showEditCard, setShowEditCard] = useState<boolean>(false);
   const { UpdateAndRealocate, realocating } = useUpdateAndRealocate();
   const { updateSubtasks, updating } = useUpdateSubtasks();
-  const [showEditCard, setShowEditCard] = useState<boolean>(false);
   const [currentSubtasksStatus, setCurrentSubtasksStatus] = useState<Subtasks>(
     {}
   );
@@ -108,17 +109,23 @@ const CurrentTaskModal = () => {
   };
 
   const toggleEditCard = () => {
-    setShowEditCard((prev) => {
-      return !prev;
-    });
+    setShowEditCard((prev) => !prev);
   };
+
+  function handleClickOutside() {
+    setShowEditCard(false);
+  }
 
   return (
     <>
       <Modal>
         <div>
           <Heading onClick={toggleEditCard} title={data?.title} />
-          {showEditCard && <EditCard right="1rem" />}
+          {showEditCard && (
+            <div ref={ref}>
+              <EditCard right="1rem" />
+            </div>
+          )}
           <Description>{data?.description}</Description>
           <SubtasksList
             onChange={handleSubtaskCompletedState}

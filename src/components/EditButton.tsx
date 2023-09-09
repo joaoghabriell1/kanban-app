@@ -17,6 +17,7 @@ const EditButton = ({ onClick }: Props) => {
 
 const Button = styled.button`
   background: none;
+  padding-inline: 1rem;
   border: 0;
 `;
 

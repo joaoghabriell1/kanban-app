@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import editIcon from "../../assets/icon-edit.svg";
+import EditButton from "../EditButton";
 
 interface Props {
   title: string | undefined;
@@ -10,9 +10,7 @@ const Heading = ({ title, onClick }: Props) => {
   return (
     <Container>
       <Title>{title}</Title>
-      <button onClick={onClick}>
-        <img src={editIcon} alt="edit task icon" />
-      </button>
+      <EditButton onClick={onClick} />
     </Container>
   );
 };

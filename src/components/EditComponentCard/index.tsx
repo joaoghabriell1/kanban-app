@@ -24,28 +24,30 @@ const EditCard = ({ top, bottom, right, left }: Props) => {
   const isTask = action === actions.MANAGE_CURRENT_TASK;
 
   const handleEdit = () => {
-    if (isTask) {
-      navigate(
-        `/${boardId}/${actions.EDIT_TASK}/${currentColumnId}/${currentTaskId}`
-      );
-    }
+    isTask
+      ? navigate(
+          `/${boardId}/${actions.EDIT_TASK}/${currentColumnId}/${currentTaskId}`
+        )
+      : navigate(
+          `/${boardId}/${actions.EDIT_BOARD}/${currentColumnId}/${currentTaskId}`
+        );
   };
-  const handleDelete = () => {
-    if (isTask) {
-      navigate(
-        `/${boardId}/${actions.DELETE_TASK}/${currentColumnId}/${currentTaskId}`
-      );
-      return;
-    }
 
-    navigate(`/${boardId}/${actions.DELETE_BOARD}`);
+  const handleDelete = () => {
+    isTask
+      ? navigate(
+          `/${boardId}/${actions.DELETE_TASK}/${currentColumnId}/${currentTaskId}`
+        )
+      : navigate(
+          `/${boardId}/${actions.DELETE_BOARD}/${currentColumnId}/${currentTaskId}`
+        );
   };
 
   return (
     <Container
       $top={top || "auto"}
       $bottom={bottom || "auto"}
-      $right={right || "auto"}
+      $right={right || "  auto"}
       $left={left || "auto"}
     >
       <EditButton onClick={handleEdit}>

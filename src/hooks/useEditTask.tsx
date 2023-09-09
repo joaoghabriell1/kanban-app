@@ -1,6 +1,6 @@
 import { useAuthContext } from "../context/Auth/AuthContext";
 import { EditTaskPayload } from "../types/api-payloads";
-import { EditTask } from "../api/api-services";
+import { editTask } from "../api/api-services";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ const editTaskMutation = async ({
   taskId,
   data,
 }: EditTaskPayload) => {
-  const response = await EditTask({ columnId, userId, boardId, taskId, data });
+  const response = await editTask({ columnId, userId, boardId, taskId, data });
   return response;
 };
 

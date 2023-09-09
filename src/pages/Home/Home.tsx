@@ -1,6 +1,7 @@
 import DeleteComponentModal from "../../components/DeleteComponentModal";
 import CurrentTaskModal from "../../components/CurrentTaskModal";
 import NewColumnModal from "../../components/NewColumnModal";
+import EditBoardModal from "../../components/EditBoardModal";
 import NewBoardModal from "../../components/NewBoardModal";
 import EditTaskModal from "../../components/EditTaskModal";
 import NewTaskModal from "../../components/NewTaskModal";
@@ -28,6 +29,7 @@ const Home = () => {
       {action === actions.DELETE_BOARD && <DeleteComponentModal />}
       {action === actions.DELETE_TASK && <DeleteComponentModal />}
       {action === actions.EDIT_TASK && <EditTaskModal />}
+      {action === actions.EDIT_BOARD && <EditBoardModal />}
     </Wrapper>
   );
 };
