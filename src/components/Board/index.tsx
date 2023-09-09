@@ -9,7 +9,7 @@ import Column from "./Column";
 
 const TasksBoard = () => {
   const { boardId } = useParams();
-  const { data, isLoading, error } = useBoard(boardId);
+  const { data, isLoading } = useBoard(boardId);
 
   if (isLoading) {
     return <LoadingColumn />;
