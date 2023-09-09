@@ -59,12 +59,9 @@ const TasksUl = styled.ul`
   gap: 2rem;
   max-height: 74vh;
   height: 100vh;
-  overflow-y: scroll;
   place-content: start;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   padding-bottom: 2rem;
+  overflow: hidden;
 `;
 
 export default Column;

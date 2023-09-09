@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { Column } from "../../types/Column";
 
 interface Props {
+  current?: string;
   onChange: (
     e: React.ChangeEvent<HTMLSelectElement> | null,
     initial?: {
@@ -15,7 +16,7 @@ interface Props {
   ) => void;
 }
 
-const SelectInput = ({ onChange }: Props) => {
+const SelectInput = ({ onChange, current }: Props) => {
   const { boardId } = useParams();
   const { data } = useBoard(boardId);
   let columns: Column[] | null = null;
@@ -25,7 +26,17 @@ const SelectInput = ({ onChange }: Props) => {
   }
 
   useEffect(() => {
-    if (columns) {
+    if (columns && current) {
+      const firstId = Object.values(columns).find(
+        (column) => column.title === current
+      )?.id;
+      const value = current;
+      const payload = {
+        id: firstId!.toString(),
+        value: value,
+      };
+      onChange(null, payload);
+    } else if (columns) {
       const firstId = Object.values(columns).shift()?.id!;
       const value = Object.values(columns).shift()?.title!;
       const payload = {
@@ -39,7 +50,7 @@ const SelectInput = ({ onChange }: Props) => {
   return (
     <>
       <Heading>Status (Column)</Heading>
-      <SelectTag required onChange={onChange}>
+      <SelectTag required defaultValue={current} onChange={onChange}>
         {columns?.map((column) => (
           <Option
             key={column.id}

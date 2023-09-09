@@ -24,6 +24,7 @@ const Modal = ({ children, heigth }: Props) => {
 export default Modal;
 
 const ModalContentWrapper = styled.div<StyledProps>`
+  display: flex;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -34,4 +35,7 @@ const ModalContentWrapper = styled.div<StyledProps>`
   margin-inline: auto;
   min-height: ${({ $height }) => ($height ? $height : "500px")};
   padding: 3.2rem;
+  & > * {
+    width: 100%;
+  }
 `;

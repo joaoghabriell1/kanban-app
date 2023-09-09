@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { actions } from "../../consts/actions";
 
 interface Props {
   right?: string;
@@ -20,19 +21,24 @@ const EditCard = ({ top, bottom, right, left }: Props) => {
   const { action, boardId, currentColumnId, currentTaskId } = useParams();
   const navigate = useNavigate();
 
-  const isTask = action === "managecurrenttask";
+  const isTask = action === actions.MANAGE_CURRENT_TASK;
 
   const handleEdit = () => {
     if (isTask) {
+      navigate(
+        `/${boardId}/${actions.EDIT_TASK}/${currentColumnId}/${currentTaskId}`
+      );
     }
   };
   const handleDelete = () => {
     if (isTask) {
-      navigate(`/${boardId}/deletetask/${currentColumnId}/${currentTaskId}`);
+      navigate(
+        `/${boardId}/${actions.DELETE_TASK}/${currentColumnId}/${currentTaskId}`
+      );
       return;
     }
 
-    navigate(`/${boardId}/deleteboard`);
+    navigate(`/${boardId}/${actions.DELETE_BOARD}`);
   };
 
   return (

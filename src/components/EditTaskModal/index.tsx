@@ -1,40 +1,44 @@
-import TextAreaDefaultInput from "../Inputs/TextAreaDefaultInput";
-import SecondaryInput from "../Inputs/SecondaryInput";
-import PrimaryInput from "../Inputs/PrimaryInput";
-import SecondaryButton from "../SecondaryButton";
-import SelectInput from "../Inputs/SelectInput";
-import PrimaryButton from "../PrimaryButton";
-import Modal from "../UI/Modal";
-
 import {
   Fieldset,
   Form,
   MarginBox,
   Heading,
   SubtasksContainer,
-} from "./styles";
-import { useCreateNewTask } from "../../hooks/useCreateNewTask";
+} from "../NewTaskModal/styles";
+import { useGetTask } from "../../hooks/useCurrentTask";
 import { Subtasks } from "../../types/Subtask";
+import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+import TextAreaDefaultInput from "../Inputs/TextAreaDefaultInput";
+import SecondaryInput from "../Inputs/SecondaryInput";
+import PrimaryInput from "../Inputs/PrimaryInput";
+import useEditTask from "../../hooks/useEditTask";
+import SecondaryButton from "../SecondaryButton";
+import SelectInput from "../Inputs/SelectInput";
+import PrimaryButton from "../PrimaryButton";
+import Modal from "../UI/Modal";
 
-const initalSubtaskId = uuidv4();
+const EditTaskModal = () => {
+  const { editTask, isApplyingChanges } = useEditTask();
+  const { boardId, currentTaskId, currentColumnId } = useParams();
+  const { data, isLoading, error } = useGetTask(
+    currentColumnId!,
+    currentTaskId!,
+    boardId!
+  );
 
-const NewTaskModal = () => {
-  const { createNewTask, isLoading, data } = useCreateNewTask();
   const [currentColumnStatus, setCurrentColumnsStatus] = useState<{
     id: string;
     value: string;
   } | null>(null);
-  const [taskTitle, setTaskTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [subtasks, setSubtasks] = useState<Subtasks>({
-    [initalSubtaskId]: {
-      id: initalSubtaskId,
-      body: "",
-      completed: false,
-    },
-  });
+  const [taskTitle, setTaskTitle] = useState<string | undefined>(data?.title);
+  const [description, setDescription] = useState<string | undefined>(
+    data?.description
+  );
+  const [subtasks, setSubtasks] = useState<Subtasks | undefined>(
+    data?.subtasks
+  );
 
   const handlePrimaryInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -106,20 +110,25 @@ const NewTaskModal = () => {
     e.preventDefault();
 
     const newTask = {
-      title: taskTitle,
-      description: description,
-      subtasks: subtasks,
+      title: taskTitle!,
+      description: description!,
+      subtasks: subtasks!,
       status: currentColumnStatus?.value!,
     };
 
-    const payload = { columnId: currentColumnStatus?.id!, task: newTask };
-    createNewTask(payload);
-  };
+    const payload = {
+      columnId: currentColumnStatus?.id!,
+      taskId: currentTaskId!,
+      data: newTask,
+    };
 
+    editTask(payload);
+  };
+  console.log(subtasks);
   return (
     <Modal>
       <Form onSubmit={handleSubmit}>
-        <h3>Add new task</h3>
+        <h3>Edit Task</h3>
         <Fieldset>
           <PrimaryInput
             value={taskTitle}
@@ -137,10 +146,10 @@ const NewTaskModal = () => {
         <Fieldset>
           <Heading>Subtasks</Heading>
           <SubtasksContainer>
-            {Object.values(subtasks).map((subtask) => (
+            {Object.values(subtasks!).map((subtask) => (
               <SecondaryInput
                 key={subtask.id}
-                disabled={Object.values(subtasks).length === 1}
+                disabled={Object.values(subtasks!).length === 1}
                 onClick={handleDeleteSubtask}
                 onChange={handleSecondaryInputChange}
                 value={subtask.body}
@@ -152,11 +161,13 @@ const NewTaskModal = () => {
         <MarginBox>
           <SecondaryButton onClick={addNewSubtask} text="+ Add New Subtask" />
         </MarginBox>
-        <SelectInput onChange={handleColumnChange} />
-        <PrimaryButton text={isLoading ? "Creating..." : "Create Task"} />
+        <SelectInput current={data?.status} onChange={handleColumnChange} />
+        <PrimaryButton
+          text={isApplyingChanges ? "Applying Changes..." : "Edit Task"}
+        />
       </Form>
     </Modal>
   );
 };
 
-export default NewTaskModal;
+export default EditTaskModal;

@@ -50,6 +50,11 @@ const Ul = styled.ul`
   flex-direction: column;
   gap: 0.8rem;
   margin-bottom: 2.4rem;
+  max-height: 200px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
 `;
 
 export default SubtasksList;

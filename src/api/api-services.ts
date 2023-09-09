@@ -1,5 +1,3 @@
-import { Subtasks } from "../types/Subtask";
-import { Column } from "../types/Column";
 import { Board } from "../types/Boards";
 import { Task } from "../types/Task";
 import ApiClient from "./api-client";
@@ -15,6 +13,7 @@ import {
   createNewColumnPayload,
   deleteTaskPayload,
   deleteBoardPayload,
+  EditTaskPayload,
 } from "../types/api-payloads";
 
 export const getAllBoards = ({ id }: getAllBoardsPayload) => {
@@ -111,4 +110,17 @@ export const deleteTask = ({
 
 export const deleteBoard = ({ userId, boardId }: deleteBoardPayload) => {
   return ApiClient.delete(`users/${userId}/boards/${boardId}.json`);
+};
+
+export const EditTask = ({
+  userId,
+  boardId,
+  columnId,
+  taskId,
+  data,
+}: EditTaskPayload) => {
+  return ApiClient.put(
+    `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${taskId}.json`,
+    data
+  );
 };

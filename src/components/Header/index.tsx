@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../PrimaryButton";
+import { actions } from "../../consts/actions";
 import { useParams } from "react-router-dom";
 import EditCard from "../EditComponentCard";
 import EditButton from "../EditButton";
@@ -13,7 +14,7 @@ const Header = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
   const addNewTaskHankder = () => {
-    navigate(`/${boardId ? boardId : "-"}/addnewtask`);
+    navigate(`/${boardId ? boardId : "-"}/${actions.ADD_NEW_TASK}`);
   };
 
   const isHomePage = !boardId || boardId == "-";

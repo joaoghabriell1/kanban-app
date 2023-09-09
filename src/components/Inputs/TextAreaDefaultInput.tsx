@@ -31,6 +31,9 @@ const Label = styled.label`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
 `;
 
 const Textarea = styled.textarea`
@@ -47,6 +50,9 @@ const Textarea = styled.textarea`
     line-height: 2.3rem;
     font-weight: 400;
     opacity: 0.25;
+  }
+  &::-webkit-scrollbar {
+    width: 15px;
   }
 `;
 

@@ -18,6 +18,7 @@ export const Wrapper = styled.div`
 
 export const NavBarWrapper = styled.nav<StyledLiProps>`
   min-width: 250px;
+  max-width: 250px;
   min-height: 320px;
   padding: 1.6rem;
   border-radius: 8px;

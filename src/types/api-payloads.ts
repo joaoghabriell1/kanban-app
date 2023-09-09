@@ -64,3 +64,11 @@ export interface deleteBoardPayload {
   userId: string;
   boardId: string;
 }
+
+export interface EditTaskPayload {
+  userId: string;
+  boardId: string;
+  columnId: string;
+  taskId: string;
+  data: Task;
+}

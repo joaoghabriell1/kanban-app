@@ -1,18 +1,19 @@
 import LoadingCurrentTaskModalSkeleton from "./loading-skeleton/LoadingCurrentTaskModalSkeleton";
-import { useUpdateAndRealocate } from "../../hooks/useUpdateAndRealocateTask";
 import useUpdateSubtasks from "../../hooks/useUpdateSubtasks";
-import { useGetTask } from "../../hooks/useCurrentTask";
 import SelectInput from "../Inputs/SelectInput";
+import PrimaryButton from "../PrimaryButton";
+import EditCard from "../EditComponentCard";
+import SubtasksList from "./SubtasksList";
+import styled from "styled-components";
+import Heading from "./Heading";
+import Modal from "../UI/Modal";
+
+import { useUpdateAndRealocate } from "../../hooks/useUpdateAndRealocateTask";
+import { useGetTask } from "../../hooks/useCurrentTask";
 import { Subtasks } from "../../types/Subtask";
 import { useParams } from "react-router-dom";
-import PrimaryButton from "../PrimaryButton";
 import { useState, useEffect } from "react";
-import SubtasksList from "./SubtasksList";
 import { Task } from "../../types/Task";
-import styled from "styled-components";
-import EditCard from "../EditComponentCard";
-import Modal from "../UI/Modal";
-import Heading from "./Heading";
 
 const CurrentTaskModal = () => {
   const { UpdateAndRealocate, realocating } = useUpdateAndRealocate();
@@ -79,7 +80,11 @@ const CurrentTaskModal = () => {
   };
 
   const handleConfirmChanges = () => {
-    const updatedTask: Task = { ...data!, subtasks: currentSubtasksStatus };
+    const updatedTask: Task = {
+      ...data!,
+      subtasks: currentSubtasksStatus,
+      status: currentColumnStatus!.value,
+    };
 
     if (currentColumnStatus!.id != currentColumnId) {
       const payload = {
@@ -89,6 +94,7 @@ const CurrentTaskModal = () => {
         newColumnId: currentColumnStatus!.id,
         task: updatedTask,
       };
+
       UpdateAndRealocate(payload);
       return;
     }
@@ -110,18 +116,20 @@ const CurrentTaskModal = () => {
   return (
     <>
       <Modal>
-        <Heading onClick={toggleEditCard} title={data?.title} />
-        {showEditCard && <EditCard right="1rem" />}
-        <Description>{data?.description}</Description>
-        <SubtasksList
-          onChange={handleSubtaskCompletedState}
-          subtasks={currentSubtasksStatus}
-        />
-        <SelectInput onChange={handleColumnChange} />
-        <PrimaryButton
-          onClick={handleConfirmChanges}
-          text={realocating ? "Applying Changes..." : "Confirm Changes"}
-        />
+        <div>
+          <Heading onClick={toggleEditCard} title={data?.title} />
+          {showEditCard && <EditCard right="1rem" />}
+          <Description>{data?.description}</Description>
+          <SubtasksList
+            onChange={handleSubtaskCompletedState}
+            subtasks={currentSubtasksStatus}
+          />
+          <SelectInput current={data?.status} onChange={handleColumnChange} />
+          <PrimaryButton
+            onClick={handleConfirmChanges}
+            text={realocating ? "Applying Changes..." : "Confirm Changes"}
+          />
+        </div>
       </Modal>
     </>
   );
@@ -131,6 +139,12 @@ const Description = styled.p`
   color: ${(props) => props.theme.colors["fc-text"]};
   font-size: 1.3rem;
   margin-block: 2.4rem;
+  word-break: break-all;
+  max-height: 95px;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 15px;
+  }
 `;
 
 export default CurrentTaskModal;

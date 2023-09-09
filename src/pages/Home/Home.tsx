@@ -2,16 +2,18 @@ import DeleteComponentModal from "../../components/DeleteComponentModal";
 import CurrentTaskModal from "../../components/CurrentTaskModal";
 import NewColumnModal from "../../components/NewColumnModal";
 import NewBoardModal from "../../components/NewBoardModal";
-import { useUIContext } from "../../context/ui/UiContext";
+import EditTaskModal from "../../components/EditTaskModal";
 import NewTaskModal from "../../components/NewTaskModal";
 import TasksBoard from "../../components/Board";
 import styled from "styled-components";
+
+import { useUIContext } from "../../context/ui/UiContext";
 import { useParams } from "react-router-dom";
+import { actions } from "../../consts/actions";
 
 interface StyledProps {
   $navIsOpen: boolean;
 }
-
 const Home = () => {
   const { showDesktopNavBar } = useUIContext();
   const { action } = useParams();
@@ -19,12 +21,13 @@ const Home = () => {
   return (
     <Wrapper $navIsOpen={showDesktopNavBar}>
       <TasksBoard />
-      {action === "addnewboard" && <NewBoardModal />}
-      {action === "addnewcolumn" && <NewColumnModal />}
-      {action === "addnewtask" && <NewTaskModal />}
-      {action === "managecurrenttask" && <CurrentTaskModal />}
-      {action === "deletetask" && <DeleteComponentModal />}
-      {action === "deleteboard" && <DeleteComponentModal />}
+      {action === actions.MANAGE_CURRENT_TASK && <CurrentTaskModal />}
+      {action === actions.ADD_NEW_BOARD && <NewBoardModal />}
+      {action === actions.ADD_NEW_COLUMN && <NewColumnModal />}
+      {action === actions.ADD_NEW_TASK && <NewTaskModal />}
+      {action === actions.DELETE_BOARD && <DeleteComponentModal />}
+      {action === actions.DELETE_TASK && <DeleteComponentModal />}
+      {action === actions.EDIT_TASK && <EditTaskModal />}
     </Wrapper>
   );
 };

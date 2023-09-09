@@ -22,20 +22,23 @@ const TasksBoard = () => {
 
   return (
     <>
-      {!boardId || boardId == "-" ? <EmptyBoard /> : null}
-      <ColumnsWrapper>
-        {columns?.map((column, index) => {
-          return (
-            <Column
-              id={column.id}
-              title={column.title}
-              tasks={column.tasks}
-              key={index}
-            />
-          );
-        })}
-        <NewColumn />
-      </ColumnsWrapper>
+      {!boardId || boardId == "-" ? (
+        <EmptyBoard />
+      ) : (
+        <ColumnsWrapper>
+          {columns?.map((column, index) => {
+            return (
+              <Column
+                id={column.id}
+                title={column.title}
+                tasks={column.tasks}
+                key={index}
+              />
+            );
+          })}
+          <NewColumn />
+        </ColumnsWrapper>
+      )}
     </>
   );
 };

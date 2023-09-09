@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import boardIcon from "../../assets/icon-board.svg";
 import { Board } from "../../types/Boards";
 import { Link } from "react-router-dom";
+import { actions } from "../../consts/actions";
 
 interface Props {
   dataArray: Board[];
@@ -23,7 +24,7 @@ const BoardsList = ({ dataArray }: Props) => {
       })}
       <Li
         onClick={() => {
-          navigate(`/${boardId ? boardId : "-"}/addnewboard`);
+          navigate(`/${boardId ? boardId : "-"}/${actions.ADD_NEW_BOARD}`);
         }}
       >
         <NewBoardButton>

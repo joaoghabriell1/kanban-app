@@ -1,5 +1,6 @@
 import { useThemeContext } from "../../context/Theme/ThemeContext";
 import { useParams, useNavigate } from "react-router-dom";
+import { actions } from "../../consts/actions";
 import styled from "styled-components";
 
 interface StyledProps {
@@ -12,7 +13,7 @@ const NewColumn = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/${boardId}/addnewcolumn`);
+    navigate(`/${boardId}/${actions.ADD_NEW_COLUMN}`);
   };
 
   return (

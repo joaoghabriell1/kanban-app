@@ -126,9 +126,10 @@ const NewBoardModal = () => {
 };
 
 const Form = styled.form`
+  width: 100%;
+  max-height: 500px;
   display: flex;
   flex-direction: column;
-  height: 100%;
 `;
 
 const MarginBox = styled.div`
@@ -140,23 +141,24 @@ const Fieldset = styled.fieldset`
   flex-direction: column;
   border: 0;
   gap: 1.2rem;
-  max-height: 200px;
   padding-bottom: 0.5rem;
   overflow-y: scroll;
   &:nth-child(2) {
     flex: 1;
     display: grid;
     align-content: start;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
+    max-height: 160px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 15px;
+    }
   }
 `;
 
 const LoadingWrapper = styled.div`
+  position: absolute;
+  inset: 0 0 0 0;
   display: flex;
-  height: 100%;
   justify-content: center;
   align-items: center;
 `;

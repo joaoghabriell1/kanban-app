@@ -9,7 +9,7 @@ interface Props {
 const Heading = ({ title, onClick }: Props) => {
   return (
     <Container>
-      <span>{title}</span>
+      <Title>{title}</Title>
       <button onClick={onClick}>
         <img src={editIcon} alt="edit task icon" />
       </button>
@@ -17,10 +17,19 @@ const Heading = ({ title, onClick }: Props) => {
   );
 };
 
-const Container = styled.h3`
+const Title = styled.h3`
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    height: 15px;
+  }
+  margin-right: 1rem;
+`;
+
+const Container = styled.div`
   color: ${(props) => props.theme.colors["fc-headings"]};
   display: flex;
-  & span {
+  align-items: center;
+  & h3 {
     flex: 1;
   }
 

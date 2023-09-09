@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Modal from "../UI/Modal";
 import useDeleteTask from "../../hooks/useDeleteTask";
 import useDeleteBoard from "../../hooks/useDeleteBoard";
+import { actions } from "../../consts/actions";
 
 const DeleteComponentModal = () => {
   const { action, boardId, currentColumnId, currentTaskId } = useParams();
@@ -13,7 +14,7 @@ const DeleteComponentModal = () => {
   const { deleteBoard, isDeletingBoard } = useDeleteBoard();
   const navigate = useNavigate();
 
-  const isTask = action === "deletetask";
+  const isTask = action === actions.DELETE_TASK;
 
   const deleteTaskWarningMessage = `Are you sure you want to delete this task and its subtasks? This action cannot be reversed.`;
   const deleteBoardWarningMessage = `Are you sure you want to delete this board? This action will remove all columns and tasks and cannot be reversed.`;
@@ -36,17 +37,19 @@ const DeleteComponentModal = () => {
 
   return (
     <Modal heigth="auto">
-      <h4>Delete this {isTask ? "task" : "boad"}?</h4>
-      <WarningMessage>
-        {isTask ? deleteTaskWarningMessage : deleteBoardWarningMessage}
-      </WarningMessage>
-      <ActionsContainer>
-        <DeleteButton
-          onClick={handleDelete}
-          text={isDeletingTask || isDeletingBoard ? "Deleting..." : "Delete"}
-        />
-        <SecondaryButton onClick={handleCancel} text="Cancel" />
-      </ActionsContainer>
+      <form>
+        <h4>Delete this {isTask ? "task" : "board"}?</h4>
+        <WarningMessage>
+          {isTask ? deleteTaskWarningMessage : deleteBoardWarningMessage}
+        </WarningMessage>
+        <ActionsContainer>
+          <DeleteButton
+            onClick={handleDelete}
+            text={isDeletingTask || isDeletingBoard ? "Deleting..." : "Delete"}
+          />
+          <SecondaryButton onClick={handleCancel} text="Cancel" />
+        </ActionsContainer>
+      </form>
     </Modal>
   );
 };
