@@ -26,7 +26,7 @@ export default {
     "hv-bg-primary-btn": colors["light-purple"],
     "hv-bg-sidebar-item": colors["pure-white"],
     "hv-bg-delete-btn": colors["light-red"],
-    "hv-bg-secondary-btn": colors["black"],
+    "hv-bg-secondary-btn": colors["pure-white"],
 
     //accent
     "fc-red": colors.red,

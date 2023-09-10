@@ -51,12 +51,13 @@ export const Header = styled.header`
 
 export const Ul = styled.ul`
   margin-block: 2rem 0.8rem;
-  flex: 1;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
-    display: none;
+    width: 15px;
   }
   margin-left: -1.6rem;
+  max-height: 367.5px;
 `;
 
 export const Li = styled.li<StyledLiProps>`
@@ -113,7 +114,7 @@ export const NewBoardButton = styled.button`
       brightness(82%) contrast(89%);
     margin-right: 1rem;
   }
-
+  margin-left: -1.55rem;
   border: 0;
   font: inherit;
   display: flex;
@@ -146,7 +147,7 @@ export const HideDesktopSideBarButton = styled.button`
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-block: 2.2rem 4.7rem;
+  margin-block: 0 4.7rem;
 `;
 
 export const ShowDesktopSideBarButton = styled.button`
