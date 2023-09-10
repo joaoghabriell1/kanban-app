@@ -5,7 +5,7 @@ import desktopLogo from "../../assets/icon-desktop-logo.svg";
 import { useThemeContext } from "../../context/Theme/ThemeContext";
 
 interface StyledProps {
-  theme: string;
+  $theme: string;
 }
 
 const Logo = () => {
@@ -18,7 +18,7 @@ const Logo = () => {
         {isMobile ? (
           <img src={logo} alt="logo icon" />
         ) : (
-          <DesktopLogo theme={currentTheme.title} src={desktopLogo} alt="" />
+          <DesktopLogo $theme={currentTheme.title} src={desktopLogo} alt="" />
         )}
       </div>
     </>
@@ -27,7 +27,7 @@ const Logo = () => {
 
 const DesktopLogo = styled.img<StyledProps>`
   filter: ${(props) =>
-    props.theme === "light"
+    props.$theme === "light"
       ? "null"
       : "invert(95%) sepia(42%) saturate(0%) hue-rotate(110deg) brightness(109%) contrast(104%)"};
 `;
