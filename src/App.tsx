@@ -1,7 +1,7 @@
 import GlobalStyles from "./styles/GlobalStyles.ts";
 import { ThemeProvider } from "styled-components";
 import Routes from "./routes/Routes";
-import { useThemeContext } from "./context/Theme/ThemeContext.tsx";
+import { useThemeContext } from "./context/theme/ThemeContext.tsx";
 
 function App() {
   const { currentTheme } = useThemeContext();

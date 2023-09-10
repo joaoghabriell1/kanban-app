@@ -1,4 +1,4 @@
-import { useThemeContext } from "../../context/Theme/ThemeContext";
+import { useThemeContext } from "../../context/theme/ThemeContext";
 import { useParams, useNavigate } from "react-router-dom";
 import { actions } from "../../consts/actions";
 import styled from "styled-components";

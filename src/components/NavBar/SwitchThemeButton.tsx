@@ -1,4 +1,4 @@
-import { useThemeContext } from "../../context/Theme/ThemeContext";
+import { useThemeContext } from "../../context/theme/ThemeContext";
 import { SwitchContainer } from "./styles";
 import moonIcon from "../../assets/icon-moon.svg";
 import sumIcon from "../../assets/icon-sun.svg";

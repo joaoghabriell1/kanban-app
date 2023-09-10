@@ -1,4 +1,4 @@
-import { useThemeContext } from "../../../context/Theme/ThemeContext";
+import { useThemeContext } from "../../../context/theme/ThemeContext";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 

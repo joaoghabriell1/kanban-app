@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ThemeContextProvider } from "./context/Theme/ThemeContext.tsx";
+import { ThemeContextProvider } from "./context/theme/ThemeContext.tsx";
 import { AuthContextProvider } from "./context/Auth/AuthContext.tsx";
 import { UIContextProvider } from "./context/ui/UiContext.tsx";
 import App from "./App.tsx";
