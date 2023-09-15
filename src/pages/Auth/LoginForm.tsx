@@ -4,6 +4,7 @@ import { errorMessagesType } from "./errors";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import errorMessages from "./errors";
+import { useState } from "react";
 import {
   Wrapper,
   FormContainer,
@@ -21,6 +22,7 @@ type FormValues = {
 };
 
 const LoginForm = () => {
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const { logIn, cleanServerErrors, serverErrors } = useAuthContext();
   const navigate = useNavigate();
 
@@ -31,6 +33,7 @@ const LoginForm = () => {
   } = useForm<FormValues>();
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsConnecting(true);
     const { email, password } = data;
 
     try {
@@ -41,6 +44,8 @@ const LoginForm = () => {
       navigate("/");
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsConnecting(false);
     }
   });
 
@@ -84,7 +89,9 @@ const LoginForm = () => {
           />
           <Error>{errors?.password?.message}</Error>
         </InputContainer>
-        <SubmitButton>Login to your account</SubmitButton>
+        <SubmitButton>
+          {isConnecting ? "Connecting..." : "Login to your account"}
+        </SubmitButton>
         <Message>
           Don't have an account?{" "}
           <span>

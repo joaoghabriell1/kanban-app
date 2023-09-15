@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 
 export const ServerError = styled.p`
   font-size: 15px;
-  color: var(--light-red);
+  color: red;
 `;
 
 export const FormContainer = styled.form`
@@ -26,7 +26,7 @@ export const FormContainer = styled.form`
 export const Error = styled.p`
   font-size: 13px;
   margin-block: 5px;
-  color: #d9cee0;
+  color: red;
 `;
 
 export const Heading = styled.h2`
@@ -42,7 +42,7 @@ export const InputContainer = styled.div`
     padding: 1.5rem;
     background: transparent;
     border: 0;
-    border-bottom: 1px solid #777171;
+    border-bottom: 1px solid ${(props) => props.theme.colors["fc-text"]};
     outline: none;
     font-size: 15px;
     font-weight: 300;
@@ -51,13 +51,20 @@ export const InputContainer = styled.div`
     opacity: 0.5;
     font-weight: 300;
   }
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+  input[data-autocompleted] {
+    background-color: transparent !important;
+  }
 `;
 
 export const SubmitButton = styled.button`
   font-family: inherit;
   width: 100%;
   padding-block: 1.4rem;
-  color: inherit;
+  color: white;
   border-radius: 6px;
   background: ${(props) => props.theme.colors["bg-primary-btn"]};
   font-size: 1.3rem;

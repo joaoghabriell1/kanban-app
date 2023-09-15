@@ -1,5 +1,5 @@
 import { DefaultTheme } from "styled-components";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import light from "../../styles/themes/light";
 import dark from "../../styles/themes/dark";
 import { useContext } from "react";
@@ -25,8 +25,14 @@ export const useThemeContext = () => {
 export const ThemeContextProvider = ({ children }: ThemeProviderProps) => {
   const [currentTheme, setTheme] = useState(dark);
 
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    setTheme(theme === "dark" ? dark : light);
+  }, []);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev.title === "light" ? dark : light));
+    localStorage.setItem("theme", currentTheme === dark ? "light" : "dark");
   };
 
   const value = {
