@@ -33,6 +33,9 @@ const Button = styled.button`
   align-items: center;
   justify-content: start;
   gap: 1rem;
+  &:hover {
+    zoom: 103%;
+  }
 `;
 
 export default LogOutButton;

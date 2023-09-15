@@ -19,18 +19,18 @@ const TaskCard = ({ title, subtasks, apiKey, columnId }: Task & Props) => {
 
   return (
     <>
-      <Li>
-        <Link
-          to={`/${boardId ? boardId : "-"}/${
-            actions.MANAGE_CURRENT_TASK
-          }/${columnId}/${apiKey}`}
-        >
+      <Link
+        to={`/${boardId ? boardId : "-"}/${
+          actions.MANAGE_CURRENT_TASK
+        }/${columnId}/${apiKey}`}
+      >
+        <Li>
           <H4>{title}</H4>
           <P>
             {totalCompleted} of {totalSubtasks} subtasks
           </P>
-        </Link>
-      </Li>
+        </Li>
+      </Link>
     </>
   );
 };
@@ -40,6 +40,9 @@ const Li = styled.li`
   padding: 2.3rem 1.6rem;
   border-radius: 8px;
   min-width: 28rem;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const H4 = styled.h4`

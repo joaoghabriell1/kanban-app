@@ -34,7 +34,7 @@ const Button = styled.button<StyledProps>`
   margin-right: 1.6rem;
   width: ${({ width }) => (width ? width : "100%")};
   &:hover {
-    background: ${(props) => props.theme.colors["hv-bg-secondary-btn"]};
+    opacity: 0.8;
   }
 `;
 export default DeleteButton;

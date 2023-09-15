@@ -148,6 +148,9 @@ export const HideDesktopSideBarButton = styled.button`
   align-items: center;
   gap: 1rem;
   margin-block: 0 4.7rem;
+  &:hover {
+    zoom: 103%;
+  }
 `;
 
 export const ShowDesktopSideBarButton = styled.button`

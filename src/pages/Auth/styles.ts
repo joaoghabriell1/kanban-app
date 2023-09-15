@@ -79,7 +79,7 @@ export const SubmitButton = styled.button`
 `;
 
 export const Message = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   text-align: center;
   span {
     color: ${(props) => props.theme.colors["fc-main-purple"]};

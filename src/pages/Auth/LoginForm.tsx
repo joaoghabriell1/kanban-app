@@ -50,63 +50,66 @@ const LoginForm = () => {
   });
 
   return (
-    <Wrapper>
-      <FormContainer onSubmit={onSubmit}>
-        <ServerError>
-          {serverErrors
-            ? errorMessages[serverErrors.code as keyof errorMessagesType]
-            : null}
-        </ServerError>
-        <Heading>Login</Heading>
-        <InputContainer>
-          <label aria-label="email input" htmlFor="email">
+    <>
+      <Wrapper>
+        <FormContainer onSubmit={onSubmit}>
+          <ServerError>
+            {serverErrors
+              ? errorMessages[serverErrors.code as keyof errorMessagesType]
+              : null}
+          </ServerError>
+          <Heading>Login</Heading>
+          <InputContainer>
+            <label aria-label="email input" htmlFor="email">
+              <input
+                type="text"
+                placeholder="Email Address"
+                {...register("email", {
+                  required: "Email required.",
+                  pattern: {
+                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                    message: "Invalid email address",
+                  },
+                })}
+              />
+              <Error>{errors.email?.message}</Error>
+            </label>
+          </InputContainer>
+          <InputContainer>
             <input
-              type="text"
-              placeholder="Email Address"
-              {...register("email", {
-                required: "Email required.",
-                pattern: {
-                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Invalid email address",
+              id="password"
+              type="password"
+              placeholder="password"
+              {...register("password", {
+                required: "Password required",
+                minLength: {
+                  value: 6,
+                  message: "Your password has to be at least 6 characters",
                 },
               })}
             />
-            <Error>{errors.email?.message}</Error>
-          </label>
-        </InputContainer>
-        <InputContainer>
-          <input
-            id="password"
-            type="password"
-            placeholder="password"
-            {...register("password", {
-              required: "Password required",
-              minLength: {
-                value: 6,
-                message: "Your password has to be at least 6 characters",
-              },
-            })}
-          />
-          <Error>{errors?.password?.message}</Error>
-        </InputContainer>
-        <SubmitButton>
-          {isConnecting ? "Connecting..." : "Login to your account"}
-        </SubmitButton>
-        <Message>
-          Don't have an account?{" "}
-          <span>
-            <Link
-              onClick={() => {
-                cleanServerErrors();
-              }}
-              to="/auth?mode=signup"
-            >
-              Register
-            </Link>
-          </span>
-        </Message>
-      </FormContainer>
-    </Wrapper>
+            <Error>{errors?.password?.message}</Error>
+          </InputContainer>
+          <Message>Example Account: example@example.com / 123456</Message>
+          <SubmitButton>
+            {isConnecting ? "Connecting..." : "Login to your account"}
+          </SubmitButton>
+          <Message>
+            Don't have an account?{" "}
+            <span>
+              <Link
+                onClick={() => {
+                  cleanServerErrors();
+                }}
+                to="/auth?mode=signup"
+              >
+                Register
+              </Link>
+            </span>
+          </Message>
+        </FormContainer>
+      </Wrapper>
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ export const useBoard = (boardId: string | undefined) => {
   const { userID } = useAuthContext();
   const { data, isLoading, error } = useQuery({
     queryKey: ["boards", userID, boardId],
-    enabled: boardId !== undefined,
+    enabled: boardId !== undefined && boardId !== "-",
     queryFn: () => getBoardMutation(userID!, boardId!),
   });
 
