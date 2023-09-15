@@ -31,6 +31,7 @@ const BackdropLayer = styled.div`
   inset: 0;
   background: #000;
   opacity: 0.5;
+  z-index: 100;
 `;
 
 export default BackDropLayer;

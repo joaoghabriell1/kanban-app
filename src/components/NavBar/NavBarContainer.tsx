@@ -3,7 +3,6 @@ import { NavBarWrapper } from "./styles";
 
 import ToggleNavBarButton from "./ToggleNavBarButton.tsx";
 import SwitchThemeButton from "./SwitchThemeButton.tsx";
-import NewBoardButton from "./NewBoardButton.tsx";
 import LogOutButton from "./LogOutButton.tsx";
 import BoardsList from "./BoardsList.tsx";
 import NavbarHeader from "./Header.tsx";

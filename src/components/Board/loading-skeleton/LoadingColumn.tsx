@@ -58,5 +58,8 @@ const Wrapper = styled.div`
   display: flex;
   margin-top: 2rem;
   gap: 1rem;
+  z-index: 0;
+  & > * {
+  }
 `;
 export default LoadingColumn;

@@ -37,5 +37,7 @@ const ModalContentWrapper = styled.div<StyledProps>`
   padding: 3.2rem;
   & > * {
     width: 100%;
+    z-index: 100;
   }
+  z-index: 100;
 `;

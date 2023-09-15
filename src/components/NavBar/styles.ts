@@ -22,7 +22,6 @@ export const NavBarWrapper = styled.nav<StyledLiProps>`
   min-height: 320px;
   padding: 1.6rem;
   border-radius: 8px;
-
   position: absolute;
   background: ${(props) => props.theme.colors["bg-cards"]};
   box-shadow: 0px 0px 10px gray;
@@ -37,6 +36,7 @@ export const NavBarWrapper = styled.nav<StyledLiProps>`
     display: flex;
     flex-direction: column;
   }
+  z-index: 99;
 `;
 
 export const Header = styled.header`

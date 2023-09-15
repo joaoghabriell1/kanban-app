@@ -10,7 +10,6 @@ const useOutsideClick = ({ callback }: Props) => {
 
   useEffect(() => {
     const handleClick = (event: any) => {
-      console.log(event);
       if (ref.current && !ref.current.contains(event.target)) {
         callback();
       }

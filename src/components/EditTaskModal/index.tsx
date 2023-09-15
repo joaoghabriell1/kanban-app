@@ -8,9 +8,10 @@ import {
 import { useGetTask } from "../../hooks/useCurrentTask";
 import { Subtasks } from "../../types/Subtask";
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
 import TextAreaDefaultInput from "../Inputs/TextAreaDefaultInput";
+import useDeleteTask from "../../hooks/useDeleteTask";
 import SecondaryInput from "../Inputs/SecondaryInput";
 import PrimaryInput from "../Inputs/PrimaryInput";
 import useEditTask from "../../hooks/useEditTask";
@@ -22,7 +23,8 @@ import Modal from "../UI/Modal";
 const EditTaskModal = () => {
   const { editTask, isApplyingChanges } = useEditTask();
   const { boardId, currentTaskId, currentColumnId } = useParams();
-  const { data, isLoading, error } = useGetTask(
+  const { deleteTask } = useDeleteTask();
+  const { data, isLoading } = useGetTask(
     currentColumnId!,
     currentTaskId!,
     boardId!
@@ -39,6 +41,12 @@ const EditTaskModal = () => {
   const [subtasks, setSubtasks] = useState<Subtasks | undefined>(
     data?.subtasks
   );
+
+  useEffect(() => {
+    setSubtasks(data?.subtasks);
+    setDescription(data?.description);
+    setTaskTitle(data?.title);
+  }, [data]);
 
   const handlePrimaryInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -108,7 +116,7 @@ const EditTaskModal = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const changedColumn = data?.status !== currentColumnStatus?.value;
     const newTask = {
       title: taskTitle!,
       description: description!,
@@ -122,9 +130,16 @@ const EditTaskModal = () => {
       data: newTask,
     };
 
+    if (changedColumn) {
+      const payload = {
+        columnId: currentColumnId!,
+        taskId: currentTaskId!,
+      };
+      deleteTask(payload);
+    }
+
     editTask(payload);
   };
-  console.log(subtasks);
   return (
     <Modal>
       <Form onSubmit={handleSubmit}>
@@ -146,16 +161,17 @@ const EditTaskModal = () => {
         <Fieldset>
           <Heading>Subtasks</Heading>
           <SubtasksContainer>
-            {Object.values(subtasks!).map((subtask) => (
-              <SecondaryInput
-                key={subtask.id}
-                disabled={Object.values(subtasks!).length === 1}
-                onClick={handleDeleteSubtask}
-                onChange={handleSecondaryInputChange}
-                value={subtask.body}
-                id={subtask.id.toString()}
-              />
-            ))}
+            {subtasks &&
+              Object.values(subtasks!).map((subtask) => (
+                <SecondaryInput
+                  key={subtask.id}
+                  disabled={Object.values(subtasks!).length === 1}
+                  onClick={handleDeleteSubtask}
+                  onChange={handleSecondaryInputChange}
+                  value={subtask.body}
+                  id={subtask.id.toString()}
+                />
+              ))}
           </SubtasksContainer>
         </Fieldset>
         <MarginBox>
