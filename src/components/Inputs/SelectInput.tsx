@@ -32,7 +32,7 @@ const SelectInput = ({ onChange, current }: Props) => {
       )?.id;
       const value = current;
       const payload = {
-        id: firstId!.toString(),
+        id: firstId?.toString() || "",
         value: value,
       };
       onChange(null, payload);
@@ -40,7 +40,7 @@ const SelectInput = ({ onChange, current }: Props) => {
       const firstId = Object.values(columns).shift()?.id!;
       const value = Object.values(columns).shift()?.title!;
       const payload = {
-        id: firstId.toString(),
+        id: firstId?.toString(),
         value: value,
       };
       onChange(null, payload);
@@ -55,7 +55,7 @@ const SelectInput = ({ onChange, current }: Props) => {
           <Option
             key={column.id}
             value={column.title}
-            id={column.id.toString()}
+            id={column?.id?.toString()}
           >
             {column.title}
           </Option>
