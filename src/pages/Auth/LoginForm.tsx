@@ -62,6 +62,7 @@ const LoginForm = () => {
           <InputContainer>
             <label aria-label="email input" htmlFor="email">
               <input
+                defaultValue="example@example.com"
                 type="text"
                 placeholder="Email Address"
                 {...register("email", {
@@ -77,6 +78,7 @@ const LoginForm = () => {
           </InputContainer>
           <InputContainer>
             <input
+              defaultValue="123456"
               id="password"
               type="password"
               placeholder="password"

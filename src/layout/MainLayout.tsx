@@ -10,7 +10,7 @@ const MainLayout = () => {
   if (loadingCurrentUser) {
     return (
       <LoadingContainer>
-        <TailSpin color="black" width="300" />;
+        <TailSpin color="black" width="300" />
       </LoadingContainer>
     );
   }
