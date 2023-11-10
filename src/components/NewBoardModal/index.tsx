@@ -21,6 +21,7 @@ const NewBoardModal = () => {
   const [columns, setColumns] = useState<Columns>({
     [firstColumnId]: {
       id: firstColumnId,
+      created_at: new Date(),
       title: "",
       tasks: [],
     },
@@ -49,7 +50,10 @@ const NewBoardModal = () => {
     const newId = uuidv4();
 
     setColumns((prev) => {
-      return { ...prev, [newId]: { id: newId, title: "", tasks: [] } };
+      return {
+        ...prev,
+        [newId]: { id: newId, title: "", created_at: new Date(), tasks: [] },
+      };
     });
   };
 

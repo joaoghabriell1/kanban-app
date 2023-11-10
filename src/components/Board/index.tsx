@@ -17,7 +17,19 @@ const TasksBoard = () => {
   let columns: ColumnType[] = [];
 
   if (data?.data?.columns) {
-    columns = Object.values(data?.data?.columns);
+    columns = Object.values(data?.data?.columns).sort((a, b) => {
+      if (!a.created_at) {
+        return 1;
+      }
+
+      if (a.created_at > b.created_at) {
+        return 1;
+      } else if (a.created_at == b.created_at) {
+        return 0;
+      }
+
+      return -1;
+    });
   }
 
   return (
@@ -29,6 +41,7 @@ const TasksBoard = () => {
           {columns?.map((column, index) => {
             return (
               <Column
+                created_at={column.created_at}
                 id={column.id}
                 title={column.title}
                 tasks={column.tasks}

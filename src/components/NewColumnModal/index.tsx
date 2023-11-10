@@ -19,6 +19,7 @@ const NewColumnModal = () => {
     e.preventDefault();
     const newColumn: Column = {
       id: uuidv4(),
+      created_at: new Date(),
       title: columnTitle,
       tasks: [],
     };

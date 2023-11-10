@@ -1,5 +1,5 @@
 import { Ul, Li } from "./styles";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import boardIcon from "../../assets/icon-board.svg";
 import { Board } from "../../types/Boards";
 import { Link } from "react-router-dom";
@@ -12,7 +12,6 @@ interface Props {
 
 const BoardsList = ({ dataArray }: Props) => {
   const { boardId } = useParams();
-  const navigate = useNavigate();
   return (
     <>
       <Container>
@@ -21,7 +20,8 @@ const BoardsList = ({ dataArray }: Props) => {
             return (
               <Li $activeLink={boardId === board.apiKey} key={index}>
                 <img src={boardIcon} alt="board icon" />
-                {board.title}a<Link to={`/${board.apiKey}`}></Link>
+                {board.title}
+                <Link to={`/${board.apiKey}`}></Link>
               </Li>
             );
           })}
