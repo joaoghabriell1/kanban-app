@@ -55,7 +55,10 @@ const EditBoardModal = () => {
     const newId = uuidv4();
 
     setColumns((prev) => {
-      return { ...prev, [newId]: { id: newId, title: "", tasks: [] } };
+      return {
+        ...prev,
+        [newId]: { id: newId, title: "", created_at: new Date(), tasks: [] },
+      };
     });
   };
 
