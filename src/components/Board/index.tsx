@@ -14,21 +14,15 @@ const TasksBoard = () => {
   if (isLoading) {
     return <LoadingColumn />;
   }
+
   let columns: ColumnType[] = [];
 
   if (data?.data?.columns) {
     columns = Object.values(data?.data?.columns).sort((a, b) => {
-      if (!a.created_at) {
-        return 1;
-      }
+      const a_time = new Date(a.created_at).getTime();
+      const b_time = new Date(b.created_at).getTime();
 
-      if (a.created_at > b.created_at) {
-        return 1;
-      } else if (a.created_at == b.created_at) {
-        return 0;
-      }
-
-      return -1;
+      return a_time - b_time;
     });
   }
 
