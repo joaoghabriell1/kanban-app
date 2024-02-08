@@ -1,8 +1,8 @@
 import { Task } from "../../types/Task";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
 import { CurrentTaskModal } from "../CurrentTaskModal/index";
+import { useUIContext } from "../../context/ui/UiContext";
 
 interface Props {
   columnId: string;
@@ -15,35 +15,33 @@ const TaskCard = ({
   description,
   status,
 }: Task & Props) => {
-  const [showTaskModal, setShowTaskModal] = useState(false);
-  const { boardId, action } = useParams();
-  let totalSubtasks = Object.values(subtasks).length;
-  let totalCompleted = Object.values(subtasks).reduce((total, subtask) => {
+  const { showCurrentTaskModal, toggleCurrentTaskModal } = useUIContext();
+  const { boardId } = useParams();
+  const totalSubtasks = Object.values(subtasks).length;
+  const totalCompleted = Object.values(subtasks).reduce((total, subtask) => {
     if (subtask.completed) {
       return (total += 1);
     }
     return total;
   }, 0);
 
-  function handleModal() {
-    setShowTaskModal((prev) => !prev);
-  }
-
   return (
     <>
-      <button onClick={handleModal}>teste</button>
-      {showTaskModal ? (
+      {showCurrentTaskModal === id ? (
         <div>
           <CurrentTaskModal
             boardId={boardId!}
             currentTaskId={id}
             currentColumnId={columnId}
-            handleModal={handleModal}
+            handleModal={toggleCurrentTaskModal}
             task={{ title, subtasks, id, description, status }}
           />
         </div>
       ) : null}
-      <Li>
+      <Li
+        onClick={() => {
+          toggleCurrentTaskModal(id);
+        }}>
         <H4>{title}</H4>
         <P>
           {totalCompleted} of {totalSubtasks} subtasks

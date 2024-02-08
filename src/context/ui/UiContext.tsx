@@ -12,6 +12,8 @@ interface UIContextTypes {
   openEditCard: () => void;
   showEditComponentCard: boolean;
   ref: RefObject<HTMLDivElement> | null;
+  showCurrentTaskModal: null | string;
+  toggleCurrentTaskModal: (action: null | string) => void;
 }
 
 const UIContext = createContext<UIContextTypes>({
@@ -19,10 +21,15 @@ const UIContext = createContext<UIContextTypes>({
   toggleDesktopNavBar: () => {},
   openEditCard: () => {},
   showEditComponentCard: false,
+  showCurrentTaskModal: null,
+  toggleCurrentTaskModal: () => {},
   ref: null,
 });
 
 export const UIContextProvider = ({ children }: Props) => {
+  const [showCurrentTaskModal, setShowCurrentTaskModal] = useState<
+    null | string
+  >(null);
   const [showDesktopNavBar, setShowDesktopNav] = useState<boolean>(true);
   const [showEditComponentCard, setShowEditComponentCard] =
     useState<boolean>(false);
@@ -32,6 +39,11 @@ export const UIContextProvider = ({ children }: Props) => {
   };
 
   const ref = useOutsideClick({ callback: handleClickOutside });
+
+  const toggleCurrentTaskModal = (action: null | string) => {
+    console.log(action);
+    setShowCurrentTaskModal(action);
+  };
 
   const toggleDesktopNavBar = () => {
     setShowDesktopNav((prev) => {
@@ -48,6 +60,8 @@ export const UIContextProvider = ({ children }: Props) => {
     showDesktopNavBar,
     openEditCard,
     showEditComponentCard,
+    showCurrentTaskModal,
+    toggleCurrentTaskModal,
     ref,
   };
 

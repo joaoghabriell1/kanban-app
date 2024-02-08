@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { SelectTag } from "./styles";
 import styled from "styled-components";
 import { useBoard } from "../../hooks/useBoard";
@@ -8,7 +7,7 @@ import { Column } from "../../types/Column";
 interface Props {
   current?: string;
   onChange: (
-    e: React.ChangeEvent<HTMLSelectElement> | null,
+    e: React.ChangeEvent<HTMLSelectElement>,
     initial?: {
       id: string;
       value: string;
@@ -18,34 +17,16 @@ interface Props {
 
 const SelectInput = ({ onChange, current }: Props) => {
   const { boardId } = useParams();
-  const { data } = useBoard(boardId);
+  const { data, isLoading } = useBoard(boardId);
   let columns: Column[] | null = null;
 
-  if (data) {
-    columns = Object.values(data?.data?.columns!);
+  if (isLoading) {
+    return <div>Loading columns...</div>;
   }
 
-  useEffect(() => {
-    if (columns && current) {
-      const firstId = Object.values(columns).find(
-        (column) => column.title === current
-      )?.id;
-      const value = current;
-      const payload = {
-        id: firstId?.toString() || "",
-        value: value,
-      };
-      onChange(null, payload);
-    } else if (columns) {
-      const firstId = Object.values(columns).shift()?.id!;
-      const value = Object.values(columns).shift()?.title!;
-      const payload = {
-        id: firstId?.toString(),
-        value: value,
-      };
-      onChange(null, payload);
-    }
-  }, [data]);
+  if (data) {
+    columns = Object.values(data.data.columns);
+  }
 
   return (
     <>
@@ -55,8 +36,7 @@ const SelectInput = ({ onChange, current }: Props) => {
           <Option
             key={column.id}
             value={column.title}
-            id={column?.id?.toString()}
-          >
+            id={column?.id?.toString()}>
             {column.title}
           </Option>
         ))}

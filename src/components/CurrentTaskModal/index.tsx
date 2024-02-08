@@ -8,7 +8,6 @@ import Heading from "./Heading";
 import Modal from "../UI/Modal";
 import { useUpdateAndRealocate } from "../../hooks/useUpdateAndRealocateTask";
 import { Subtasks } from "../../types/Subtask";
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Task } from "../../types/Task";
 import useOutsideClick from "../../hooks/useOutsideClick";
@@ -18,7 +17,7 @@ type Props = {
   currentTaskId: string;
   currentColumnId: string;
   task: Task;
-  handleModal: () => void;
+  handleModal: (action: null | string) => void;
 };
 
 export const CurrentTaskModal = ({
@@ -41,12 +40,12 @@ export const CurrentTaskModal = ({
   const [currentColumnStatus, setCurrentColumnsStatus] = useState<{
     id: string;
     value: string;
-  } | null>({ id: currentColumnId!, value: task.status });
+  } | null>({ id: currentColumnId, value: task.status });
 
   const handleSubtaskCompletedState = (id: string) => {
     setCurrentSubtasksStatus((prev) => {
       let newObj = { ...prev };
-      for (let key in newObj) {
+      for (const key in newObj) {
         if (newObj[key as keyof Subtasks].id == id) {
           newObj = {
             ...newObj,
@@ -59,7 +58,7 @@ export const CurrentTaskModal = ({
   };
 
   const handleColumnChange = (
-    e: React.ChangeEvent<HTMLSelectElement> | null,
+    e: React.ChangeEvent<HTMLSelectElement>,
     initial?: {
       id: string;
       value: string;
@@ -70,8 +69,10 @@ export const CurrentTaskModal = ({
       return;
     }
 
-    const { value } = e?.currentTarget!;
-    const id = e?.currentTarget!.selectedOptions[0]!.getAttribute("id")!;
+    const { value } = e.currentTarget;
+
+    const id = e.currentTarget.selectedOptions[0].getAttribute("id") as string;
+
     setCurrentColumnsStatus({ id: id, value: value });
   };
 
@@ -90,7 +91,6 @@ export const CurrentTaskModal = ({
         newColumnId: currentColumnStatus!.id,
         task: updatedTask,
       };
-
       UpdateAndRealocate(payload);
       return;
     }
@@ -113,7 +113,7 @@ export const CurrentTaskModal = ({
   }
 
   function onClick() {
-    handleModal();
+    handleModal(null);
   }
 
   return (
@@ -134,7 +134,11 @@ export const CurrentTaskModal = ({
           <SelectInput current={task?.status} onChange={handleColumnChange} />
           <PrimaryButton
             onClick={handleConfirmChanges}
-            text={realocating ? "Applying Changes..." : "Confirm Changes"}
+            text={
+              updating || realocating
+                ? "Applying Changes..."
+                : "Confirm Changes"
+            }
           />
         </div>
       </Modal>

@@ -3,9 +3,8 @@ import { updateSubtasksPaylaod } from "../types/api-payloads";
 import { updateSubtasks } from "../api/api-services";
 import { Subtasks } from "../types/Subtask";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
+import { useUIContext } from "../context/ui/UiContext";
 
 interface MutationParams {
   boardId: string;
@@ -32,9 +31,8 @@ export const updateSubtasksMutation = async ({
 };
 const useUpdateSubtasks = () => {
   const { userID } = useAuthContext();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { boardId } = useParams();
+  const { toggleCurrentTaskModal } = useUIContext();
 
   const {
     mutate: updateSubtasks,
@@ -54,7 +52,8 @@ const useUpdateSubtasks = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(["boards", userID]);
         queryClient.removeQueries({ queryKey: ["current-task"], exact: true });
-        navigate(`/${boardId!}`);
+        console.log("teest");
+        toggleCurrentTaskModal(null);
       },
       onError: (e) => {
         console.log(e);

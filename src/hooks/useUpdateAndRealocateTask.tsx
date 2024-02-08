@@ -1,8 +1,7 @@
 import { updateTaskandChangeColumnPayload } from "../types/api-payloads";
 import { updateTaskandChangeColumn } from "../api/api-services";
 import { useAuthContext } from "../context/Auth/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useUIContext } from "../context/ui/UiContext";
 import { useQueryClient } from "react-query";
 import { useMutation } from "react-query";
 import { Task } from "../types/Task";
@@ -35,14 +34,12 @@ const updateAndRealocateTaskMutation = async ({
 };
 
 export const useUpdateAndRealocate = () => {
+  const { toggleCurrentTaskModal } = useUIContext();
   const { userID } = useAuthContext();
-  const { boardId } = useParams();
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const {
     mutate: UpdateAndRealocate,
-    data,
     isLoading: realocating,
     error,
   } = useMutation(
@@ -59,7 +56,7 @@ export const useUpdateAndRealocate = () => {
       onSuccess: () => {
         queryClient.removeQueries({ queryKey: ["current-task"], exact: true });
         queryClient.invalidateQueries(["boards", userID]);
-        navigate(`/${boardId!}`);
+        toggleCurrentTaskModal(null);
       },
     }
   );
