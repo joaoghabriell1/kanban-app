@@ -1,7 +1,7 @@
 import { Task } from "./Task";
 
 export interface Column {
-  id: string | number;
+  id: string;
   title: string;
   created_at: Date;
   tasks: Task[];
