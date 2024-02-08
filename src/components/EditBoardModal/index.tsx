@@ -23,12 +23,8 @@ import { useState } from "react";
 const EditBoardModal = () => {
   const { boardId } = useParams();
   const { data } = useBoard(boardId);
-  const [boardTitle, setBoardTitle] = useState<string | undefined>(
-    data?.data.title
-  );
-  const [columns, setColumns] = useState<Columns | undefined>(
-    data?.data.columns
-  );
+  const [boardTitle, setBoardTitle] = useState<string | undefined>(data?.title);
+  const [columns, setColumns] = useState<Columns | undefined>(data?.columns);
 
   const { editBoard, applyingChanges } = useEditBoard();
 
@@ -114,7 +110,6 @@ const EditBoardModal = () => {
           <Heading>Board Columns</Heading>
           {columns
             ? Object.values(columns).map((column, index) => {
-                console.log(column.id, column.title);
                 return (
                   <SecondaryInput
                     disabled={Object.keys(columns).length === 1}

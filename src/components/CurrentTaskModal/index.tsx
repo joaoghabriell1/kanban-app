@@ -29,7 +29,6 @@ export const CurrentTaskModal = ({
 }: Props) => {
   const modalRef = useOutsideClick({ callback: onClick });
   const editCardRef = useOutsideClick({ callback: handleClickOutside });
-
   const [showEditCard, setShowEditCard] = useState<boolean>(false);
   const { UpdateAndRealocate, realocating } = useUpdateAndRealocate();
   const { updateSubtasks, updating } = useUpdateSubtasks();
@@ -57,18 +56,7 @@ export const CurrentTaskModal = ({
     });
   };
 
-  const handleColumnChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    initial?: {
-      id: string;
-      value: string;
-    }
-  ) => {
-    if (initial) {
-      setCurrentColumnsStatus(initial);
-      return;
-    }
-
+  const handleColumnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.currentTarget;
 
     const id = e.currentTarget.selectedOptions[0].getAttribute("id") as string;

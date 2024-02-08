@@ -6,13 +6,8 @@ import { Column } from "../../types/Column";
 
 interface Props {
   current?: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    initial?: {
-      id: string;
-      value: string;
-    }
-  ) => void;
+  initialColumn?: { id: string; value: string } | null;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const SelectInput = ({ onChange, current }: Props) => {
@@ -25,13 +20,13 @@ const SelectInput = ({ onChange, current }: Props) => {
   }
 
   if (data) {
-    columns = Object.values(data.data.columns);
+    columns = Object.values(data.columns);
   }
 
   return (
     <>
       <Heading>Status (Column)</Heading>
-      <SelectTag required defaultValue={current} onChange={onChange}>
+      <SelectTag required defaultValue={current || null} onChange={onChange}>
         {columns?.map((column) => (
           <Option
             key={column.id}

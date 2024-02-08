@@ -5,6 +5,8 @@ import SecondaryButton from "../SecondaryButton";
 import SelectInput from "../Inputs/SelectInput";
 import PrimaryButton from "../PrimaryButton";
 import Modal from "../UI/Modal";
+import { useBoard } from "../../hooks/useBoard";
+import { useParams } from "react-router-dom";
 
 import {
   Fieldset,
@@ -16,13 +18,15 @@ import {
 import { useCreateNewTask } from "../../hooks/useCreateNewTask";
 import { Subtasks } from "../../types/Subtask";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Task } from "types/Task";
 
 const initalSubtaskId = uuidv4();
 
 const NewTaskModal = () => {
-  const { createNewTask, isLoading, data } = useCreateNewTask();
+  const { boardId } = useParams();
+  const { data: currentBoard } = useBoard(boardId);
+  const { createNewTask, isLoading } = useCreateNewTask();
   const [currentColumnStatus, setCurrentColumnsStatus] = useState<{
     id: string;
     value: string;
@@ -37,6 +41,17 @@ const NewTaskModal = () => {
     },
   });
 
+  useEffect(() => {
+    if (currentBoard && !currentColumnStatus) {
+      const initialColumn = Object.values(currentBoard.columns)[0];
+      setCurrentColumnsStatus({
+        id: initialColumn.id,
+        value: initialColumn.title,
+      });
+      console.log(initialColumn);
+    }
+  }, [currentBoard, currentColumnStatus]);
+
   const handlePrimaryInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setTaskTitle(value);
@@ -48,7 +63,7 @@ const NewTaskModal = () => {
     setSubtasks((prev) => {
       const newSubtasks = { ...prev };
 
-      for (let key in newSubtasks) {
+      for (const key in newSubtasks) {
         if (newSubtasks[key].id.toString() === id) {
           newSubtasks[key].body = value;
         }
@@ -87,7 +102,7 @@ const NewTaskModal = () => {
   };
 
   const handleColumnChange = (
-    e: React.ChangeEvent<HTMLSelectElement> | null,
+    e: React.ChangeEvent<HTMLSelectElement>,
     initial?: {
       id: string;
       value: string;
@@ -98,8 +113,9 @@ const NewTaskModal = () => {
       return;
     }
 
-    const { value } = e?.currentTarget!;
-    const id = e?.currentTarget!.selectedOptions[0]!.getAttribute("id")!;
+    const { value } = e.currentTarget;
+
+    const id = e.currentTarget.selectedOptions[0].getAttribute("id") as string;
     setCurrentColumnsStatus({ id: id, value: value });
   };
 
@@ -112,10 +128,10 @@ const NewTaskModal = () => {
       title: taskTitle,
       description: description,
       subtasks: subtasks,
-      status: currentColumnStatus?.value!,
+      status: currentColumnStatus!.value,
     };
 
-    const payload = { columnId: currentColumnStatus?.id!, task: newTask };
+    const payload = { columnId: currentColumnStatus!.id, task: newTask };
     createNewTask(payload);
   };
 
@@ -155,7 +171,10 @@ const NewTaskModal = () => {
         <MarginBox>
           <SecondaryButton onClick={addNewSubtask} text="+ Add New Subtask" />
         </MarginBox>
-        <SelectInput onChange={handleColumnChange} />
+        <SelectInput
+          initialColumn={currentColumnStatus}
+          onChange={handleColumnChange}
+        />
         <PrimaryButton text={isLoading ? "Creating..." : "Create Task"} />
       </Form>
     </Modal>

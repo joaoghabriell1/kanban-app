@@ -17,7 +17,7 @@ export const useBoard = (boardId: string | undefined) => {
   });
 
   return {
-    data,
+    data: data?.data,
     isLoading,
     error,
   };

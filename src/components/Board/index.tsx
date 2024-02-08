@@ -17,8 +17,8 @@ const TasksBoard = () => {
 
   let columns: ColumnType[] = [];
 
-  if (data?.data?.columns) {
-    columns = Object.values(data?.data?.columns).sort((a, b) => {
+  if (data?.columns) {
+    columns = Object.values(data?.columns).sort((a, b) => {
       const a_time = new Date(a.created_at).getTime();
       const b_time = new Date(b.created_at).getTime();
 
