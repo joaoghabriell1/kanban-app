@@ -13,7 +13,7 @@ const NavBar = () => {
   const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
   const isMobile = useMediaQuery("(max-width:768px)");
   const { data } = useBoard(boardId);
-  const title = data?.data?.title;
+  const title = data?.title;
 
   return (
     <Wrapper>
