@@ -31,7 +31,8 @@ const SelectInput = ({ onChange, current }: Props) => {
           <Option
             key={column.id}
             value={column.title}
-            id={column?.id?.toString()}>
+            id={column?.id?.toString()}
+          >
             {column.title}
           </Option>
         ))}

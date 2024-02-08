@@ -25,11 +25,7 @@ const EditTaskModal = () => {
   const { editTask, isApplyingChanges } = useEditTask();
   const { boardId, currentTaskId, currentColumnId } = useParams();
   const { deleteTask } = useDeleteTask();
-  const { data, isLoading } = useGetTask(
-    currentColumnId!,
-    currentTaskId!,
-    boardId!
-  );
+  const { data } = useGetTask(currentColumnId!, currentTaskId!, boardId!);
 
   const [currentColumnStatus, setCurrentColumnsStatus] = useState<{
     id: string;
@@ -47,6 +43,10 @@ const EditTaskModal = () => {
     setSubtasks(data?.subtasks);
     setDescription(data?.description);
     setTaskTitle(data?.title);
+    setCurrentColumnsStatus({
+      id: currentColumnId!,
+      value: data?.status!,
+    });
   }, [data]);
 
   const handlePrimaryInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,13 +59,7 @@ const EditTaskModal = () => {
 
     setSubtasks((prev) => {
       const newSubtasks = { ...prev };
-
-      for (let key in newSubtasks) {
-        if (newSubtasks[key].id.toString() === id) {
-          newSubtasks[key].body = value;
-        }
-      }
-
+      newSubtasks[id].body = value;
       return newSubtasks;
     });
   };
@@ -98,25 +92,15 @@ const EditTaskModal = () => {
     });
   };
 
-  const handleColumnChange = (
-    e: React.ChangeEvent<HTMLSelectElement> | null,
-    initial?: {
-      id: string;
-      value: string;
-    }
-  ) => {
-    if (initial) {
-      setCurrentColumnsStatus(initial);
-      return;
-    }
-
-    const { value } = e?.currentTarget!;
-    const id = e?.currentTarget!.selectedOptions[0]!.getAttribute("id")!;
+  const handleColumnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.currentTarget!;
+    const id = e.currentTarget.selectedOptions[0].getAttribute("id")!;
     setCurrentColumnsStatus({ id: id, value: value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const changedColumn = data?.status !== currentColumnStatus?.value;
 
     const newTask: Task = {
@@ -128,7 +112,7 @@ const EditTaskModal = () => {
     };
 
     const payload = {
-      columnId: currentColumnStatus?.id!,
+      columnId: currentColumnId!,
       taskId: currentTaskId!,
       data: newTask,
     };
