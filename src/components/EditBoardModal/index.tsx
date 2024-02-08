@@ -22,7 +22,7 @@ import { useState } from "react";
 
 const EditBoardModal = () => {
   const { boardId } = useParams();
-  const { data, isLoading } = useBoard(boardId);
+  const { data } = useBoard(boardId);
   const [boardTitle, setBoardTitle] = useState<string | undefined>(
     data?.data.title
   );
@@ -42,7 +42,7 @@ const EditBoardModal = () => {
 
     setColumns((prev) => {
       const newColumns = { ...prev };
-      for (let key in newColumns) {
+      for (const key in newColumns) {
         if (newColumns[key].id.toString() === id) {
           newColumns[key].title = value;
         }
@@ -95,6 +95,8 @@ const EditBoardModal = () => {
     );
   }
 
+  console.log(columns);
+
   return (
     <Modal>
       <Form onSubmit={handleSubmit}>
@@ -112,6 +114,7 @@ const EditBoardModal = () => {
           <Heading>Board Columns</Heading>
           {columns
             ? Object.values(columns).map((column, index) => {
+                console.log(column.id, column.title);
                 return (
                   <SecondaryInput
                     disabled={Object.keys(columns).length === 1}

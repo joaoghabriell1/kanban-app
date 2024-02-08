@@ -1,13 +1,19 @@
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useUIContext } from "../../context/ui/UiContext";
 import { useNavigate } from "react-router-dom";
 import { actions } from "../../consts/actions";
+import { Task } from "types/Task";
 
 interface Props {
   right?: string;
   left?: string;
   top?: string;
   bottom?: string;
+  task?: Task;
+  component?: string;
+  boardId: string;
+  columnId?: string;
+  taskId?: string;
 }
 
 interface StyledProps {
@@ -17,30 +23,35 @@ interface StyledProps {
   $bottom?: string;
 }
 
-const EditCard = ({ top, bottom, right, left }: Props) => {
-  const { action, boardId, currentColumnId, currentTaskId } = useParams();
+const EditCard = ({
+  top,
+  bottom,
+  right,
+  left,
+  component,
+  boardId,
+  columnId,
+  taskId,
+}: Props) => {
   const navigate = useNavigate();
-
-  const isTask = action === actions.MANAGE_CURRENT_TASK;
+  const { toggleCurrentTaskModal } = useUIContext();
+  const isTask = component === "task";
 
   const handleEdit = () => {
-    isTask
-      ? navigate(
-          `/${boardId}/${actions.EDIT_TASK}/${currentColumnId}/${currentTaskId}`
-        )
-      : navigate(
-          `/${boardId}/${actions.EDIT_BOARD}/${currentColumnId}/${currentTaskId}`
-        );
+    navigate(
+      `/${boardId}/${
+        isTask ? actions.EDIT_TASK : actions.EDIT_BOARD
+      }/${columnId}/${taskId}`
+    );
   };
 
   const handleDelete = () => {
-    isTask
-      ? navigate(
-          `/${boardId}/${actions.DELETE_TASK}/${currentColumnId}/${currentTaskId}`
-        )
-      : navigate(
-          `/${boardId}/${actions.DELETE_BOARD}/${currentColumnId}/${currentTaskId}`
-        );
+    toggleCurrentTaskModal(null);
+    navigate(
+      `/${boardId}/${
+        isTask ? actions.DELETE_TASK : actions.DELETE_BOARD
+      }/${columnId}/${taskId}`
+    );
   };
 
   return (
@@ -48,8 +59,7 @@ const EditCard = ({ top, bottom, right, left }: Props) => {
       $top={top || "auto"}
       $bottom={bottom || "auto"}
       $right={right || "  auto"}
-      $left={left || "auto"}
-    >
+      $left={left || "auto"}>
       <EditButton onClick={handleEdit}>
         Edit {isTask ? "Task" : "Board"}
       </EditButton>

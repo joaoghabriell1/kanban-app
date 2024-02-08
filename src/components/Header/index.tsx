@@ -17,7 +17,7 @@ const Header = () => {
   const navigate = useNavigate();
   const ref = useOutsideClick({ callback: handleOutsideClick });
 
-  const addNewTaskHankder = () => {
+  const addNewTaskHandler = () => {
     navigate(`/${boardId ? boardId : "-"}/${actions.ADD_NEW_TASK}`);
   };
 
@@ -38,7 +38,7 @@ const Header = () => {
       {!isHomePage && (
         <>
           <PrimaryButton
-            onClick={addNewTaskHankder}
+            onClick={addNewTaskHandler}
             width="50px"
             text="Add new Task"
             mobileText="+"
@@ -49,7 +49,7 @@ const Header = () => {
       )}
       {showEditCard && (
         <div ref={ref}>
-          <EditCard top="7rem" right="1rem" />
+          <EditCard boardId={boardId as string} top="7rem" right="1rem" />
         </div>
       )}
     </HeaderTag>

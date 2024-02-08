@@ -123,7 +123,13 @@ export const CurrentTaskModal = ({
           <Heading onClick={toggleEditCard} title={task?.title} />
           {showEditCard && (
             <div ref={editCardRef}>
-              <EditCard right="1rem" />
+              <EditCard
+                boardId={boardId}
+                columnId={currentColumnId}
+                taskId={task.id}
+                component="task"
+                right="1rem"
+              />
             </div>
           )}
           <Description>{task?.description}</Description>
