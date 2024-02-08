@@ -10,8 +10,7 @@ const LoadingColumn = () => {
     <div>
       <SkeletonTheme
         baseColor={currentTheme.colors["bg-cards"]}
-        highlightColor={currentTheme.colors["bg-main"]}
-      >
+        highlightColor={currentTheme.colors["bg-main"]}>
         <Wrapper>
           {array.map((item, index) => {
             return (

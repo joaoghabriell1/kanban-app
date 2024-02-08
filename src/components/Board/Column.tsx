@@ -3,7 +3,7 @@ import { Task } from "../../types/Task";
 import styled from "styled-components";
 import TaskCard from "./TaskCard";
 
-const Column = ({ title, tasks: t, id, created_at }: ColumnType) => {
+const Column = ({ title, tasks: t, id }: ColumnType) => {
   let tasks: Task[] = [];
 
   if (t) {

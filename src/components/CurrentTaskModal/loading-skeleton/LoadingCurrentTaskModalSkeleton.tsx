@@ -9,8 +9,7 @@ const LoadingCurrentTaskModalSkeleton = () => {
       <div>
         <SkeletonTheme
           baseColor={currentTheme.colors["bg-main"]}
-          highlightColor={currentTheme.colors["bg-cards"]}
-        >
+          highlightColor={currentTheme.colors["bg-cards"]}>
           <Skeleton height="3.6rem" count={1} />
           <Skeleton style={{ marginBlock: "2.4rem" }} height="2rem" />
           <Skeleton style={{ marginBottom: "2rem" }} height="1.6rem" />
