@@ -1,6 +1,4 @@
-import LoadingCurrentTaskModalSkeleton from "./loading-skeleton/LoadingCurrentTaskModalSkeleton";
 import useUpdateSubtasks from "../../hooks/useUpdateSubtasks";
-import useOutsideClick from "../../hooks/useOutsideClick";
 import SelectInput from "../Inputs/SelectInput";
 import PrimaryButton from "../PrimaryButton";
 import EditCard from "../EditComponentCard";
@@ -9,47 +7,41 @@ import styled from "styled-components";
 import Heading from "./Heading";
 import Modal from "../UI/Modal";
 import { useUpdateAndRealocate } from "../../hooks/useUpdateAndRealocateTask";
-import { useGetTask } from "../../hooks/useCurrentTask";
 import { Subtasks } from "../../types/Subtask";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Task } from "../../types/Task";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
-const CurrentTaskModal = () => {
-  const ref = useOutsideClick({ callback: handleClickOutside });
+type Props = {
+  boardId: string;
+  currentTaskId: string;
+  currentColumnId: string;
+  task: Task;
+  handleModal: () => void;
+};
+
+export const CurrentTaskModal = ({
+  task,
+  handleModal,
+  boardId,
+  currentColumnId,
+  currentTaskId,
+}: Props) => {
+  const modalRef = useOutsideClick({ callback: onClick });
+  const editCardRef = useOutsideClick({ callback: handleClickOutside });
+
   const [showEditCard, setShowEditCard] = useState<boolean>(false);
   const { UpdateAndRealocate, realocating } = useUpdateAndRealocate();
   const { updateSubtasks, updating } = useUpdateSubtasks();
   const [currentSubtasksStatus, setCurrentSubtasksStatus] = useState<Subtasks>(
-    {}
+    task.subtasks
   );
+
   const [currentColumnStatus, setCurrentColumnsStatus] = useState<{
     id: string;
     value: string;
-  } | null>(null);
-
-  const { boardId, currentTaskId, currentColumnId } = useParams();
-  const { data, isLoading, error } = useGetTask(
-    currentColumnId!,
-    currentTaskId!,
-    boardId!
-  );
-
-  console.log(currentTaskId);
-
-  useEffect(() => {
-    if (data) {
-      setCurrentSubtasksStatus(data.subtasks);
-    }
-  }, [data]);
-
-  if (isLoading) {
-    return (
-      <Modal>
-        <LoadingCurrentTaskModalSkeleton />
-      </Modal>
-    );
-  }
+  } | null>({ id: currentColumnId!, value: task.status });
 
   const handleSubtaskCompletedState = (id: string) => {
     setCurrentSubtasksStatus((prev) => {
@@ -65,6 +57,7 @@ const CurrentTaskModal = () => {
       return newObj;
     });
   };
+
   const handleColumnChange = (
     e: React.ChangeEvent<HTMLSelectElement> | null,
     initial?: {
@@ -84,7 +77,7 @@ const CurrentTaskModal = () => {
 
   const handleConfirmChanges = () => {
     const updatedTask: Task = {
-      ...data!,
+      ...task!,
       subtasks: currentSubtasksStatus,
       status: currentColumnStatus!.value,
     };
@@ -119,22 +112,26 @@ const CurrentTaskModal = () => {
     setShowEditCard(false);
   }
 
+  function onClick() {
+    handleModal();
+  }
+
   return (
     <>
       <Modal>
-        <div>
-          <Heading onClick={toggleEditCard} title={data?.title} />
+        <div ref={modalRef}>
+          <Heading onClick={toggleEditCard} title={task?.title} />
           {showEditCard && (
-            <div ref={ref}>
+            <div ref={editCardRef}>
               <EditCard right="1rem" />
             </div>
           )}
-          <Description>{data?.description}</Description>
+          <Description>{task?.description}</Description>
           <SubtasksList
             onChange={handleSubtaskCompletedState}
             subtasks={currentSubtasksStatus}
           />
-          <SelectInput current={data?.status} onChange={handleColumnChange} />
+          <SelectInput current={task?.status} onChange={handleColumnChange} />
           <PrimaryButton
             onClick={handleConfirmChanges}
             text={realocating ? "Applying Changes..." : "Confirm Changes"}
