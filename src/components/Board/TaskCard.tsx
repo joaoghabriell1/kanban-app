@@ -1,54 +1,43 @@
 import { Task } from "../../types/Task";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
-import { CurrentTaskModal } from "../CurrentTaskModal/index";
+import { actions } from "../../consts/actions";
 
 interface Props {
-  columnId: string;
+  columnId: string | number;
 }
-const TaskCard = ({
-  title,
-  subtasks,
-  id,
-  columnId,
-  description,
-  status,
-}: Task & Props) => {
-  const [showTaskModal, setShowTaskModal] = useState(false);
-  const { boardId, action } = useParams();
-  let totalSubtasks = Object.values(subtasks).length;
-  let totalCompleted = Object.values(subtasks).reduce((total, subtask) => {
-    if (subtask.completed) {
-      return (total += 1);
-    }
-    return total;
-  }, 0);
+const TaskCard = ({ title, subtasks, id, columnId }: Task & Props) => {
+  const { boardId } = useParams();
+  let totalSubtasks = 0;
+  let totalCompleted = 0;
 
-  function handleModal() {
-    setShowTaskModal((prev) => !prev);
+  if (subtasks) {
+    totalSubtasks = Object.values(subtasks).length;
+  }
+  if (totalCompleted) {
+    totalCompleted = Object.values(subtasks).reduce((total, subtask) => {
+      if (subtask.completed) {
+        return (total += 1);
+      }
+      return total;
+    }, 0);
   }
 
   return (
     <>
-      <button onClick={handleModal}>teste</button>
-      {showTaskModal ? (
-        <div>
-          <CurrentTaskModal
-            boardId={boardId!}
-            currentTaskId={id}
-            currentColumnId={columnId}
-            handleModal={handleModal}
-            task={{ title, subtasks, id, description, status }}
-          />
-        </div>
-      ) : null}
-      <Li>
-        <H4>{title}</H4>
-        <P>
-          {totalCompleted} of {totalSubtasks} subtasks
-        </P>
-      </Li>
+      <Link
+        to={`/${boardId ? boardId : "-"}/${
+          actions.MANAGE_CURRENT_TASK
+        }/${columnId}/${id}`}
+      >
+        <Li>
+          <H4>{title}</H4>
+          <P>
+            {totalCompleted} of {totalSubtasks} subtasks
+          </P>
+        </Li>
+      </Link>
     </>
   );
 };

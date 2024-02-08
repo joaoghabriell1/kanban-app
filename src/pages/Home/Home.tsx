@@ -1,4 +1,5 @@
 import DeleteComponentModal from "../../components/DeleteComponentModal";
+import CurrentTaskModal from "../../components/CurrentTaskModal";
 import NewColumnModal from "../../components/NewColumnModal";
 import EditBoardModal from "../../components/EditBoardModal";
 import NewBoardModal from "../../components/NewBoardModal";
@@ -21,6 +22,7 @@ const Home = () => {
   return (
     <Wrapper $navIsOpen={showDesktopNavBar}>
       <TasksBoard />
+      {action === actions.MANAGE_CURRENT_TASK && <CurrentTaskModal />}
       {action === actions.ADD_NEW_BOARD && <NewBoardModal />}
       {action === actions.ADD_NEW_COLUMN && <NewColumnModal />}
       {action === actions.ADD_NEW_TASK && <NewTaskModal />}
