@@ -19,6 +19,7 @@ import SecondaryButton from "../SecondaryButton";
 import SelectInput from "../Inputs/SelectInput";
 import PrimaryButton from "../PrimaryButton";
 import Modal from "../UI/Modal";
+import { Task } from "types/Task";
 
 const EditTaskModal = () => {
   const { editTask, isApplyingChanges } = useEditTask();
@@ -117,7 +118,9 @@ const EditTaskModal = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const changedColumn = data?.status !== currentColumnStatus?.value;
-    const newTask = {
+
+    const newTask: Task = {
+      id: currentTaskId!,
       title: taskTitle!,
       description: description!,
       subtasks: subtasks!,

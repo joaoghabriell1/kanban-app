@@ -46,8 +46,8 @@ export const createNewTask = ({
   columnId,
   data,
 }: createNewTaskPayload) => {
-  return ApiClient.post(
-    `users/${userId}/boards/${boardId}/columns/${columnId}/tasks.json`,
+  return ApiClient.put(
+    `users/${userId}/boards/${boardId}/columns/${columnId}/tasks/${data.id}.json`,
     data
   );
 };
@@ -76,8 +76,8 @@ export const updateTaskandChangeColumn = ({
   const delete_task_from_current_place = ApiClient.delete(
     `users/${userId}/boards/${boardId}/columns/${currentColumnId}/tasks/${taskId}.json`
   );
-  const realocate_task_to_other_column = ApiClient.post(
-    `users/${userId}/boards/${boardId}/columns/${newColumnId}/tasks.json`,
+  const realocate_task_to_other_column = ApiClient.put(
+    `users/${userId}/boards/${boardId}/columns/${newColumnId}/tasks/${taskId}.json`,
     task
   );
 

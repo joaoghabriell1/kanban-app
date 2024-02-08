@@ -3,20 +3,14 @@ import { Task } from "../../types/Task";
 import styled from "styled-components";
 import TaskCard from "./TaskCard";
 
-const Column = ({ title, tasks, id, created_at }: ColumnType) => {
-  let array: Task[] = [];
+const Column = ({ title, tasks: t, id, created_at }: ColumnType) => {
+  let tasks: Task[] = [];
 
-  if (tasks) {
-    for (let key in tasks) {
-      const task = {
-        ...tasks[key],
-        apiKey: key,
-      };
-      array.push(task);
-    }
+  if (t) {
+    tasks = Object.values(t);
   }
 
-  const numOfTasks = array?.length || 0;
+  const numOfTasks = tasks?.length || 0;
 
   return (
     <>
@@ -25,11 +19,11 @@ const Column = ({ title, tasks, id, created_at }: ColumnType) => {
           - {title}({numOfTasks})
         </ColumnTitle>
         <TasksUl>
-          {array?.map((task, index) => {
+          {tasks?.map((task, index) => {
             return (
               <TaskCard
                 key={index}
-                apiKey={task.apiKey}
+                id={task.id}
                 columnId={id}
                 title={task.title}
                 description={task.description}

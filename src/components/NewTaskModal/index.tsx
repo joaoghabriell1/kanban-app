@@ -17,6 +17,7 @@ import { useCreateNewTask } from "../../hooks/useCreateNewTask";
 import { Subtasks } from "../../types/Subtask";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+import { Task } from "types/Task";
 
 const initalSubtaskId = uuidv4();
 
@@ -104,8 +105,10 @@ const NewTaskModal = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const newTaskId = uuidv4();
 
-    const newTask = {
+    const newTask: Task = {
+      id: newTaskId,
       title: taskTitle,
       description: description,
       subtasks: subtasks,

@@ -35,6 +35,8 @@ const CurrentTaskModal = () => {
     boardId!
   );
 
+  console.log(currentTaskId);
+
   useEffect(() => {
     if (data) {
       setCurrentSubtasksStatus(data.subtasks);
@@ -99,6 +101,7 @@ const CurrentTaskModal = () => {
       UpdateAndRealocate(payload);
       return;
     }
+
     const updateSubtasksPayload = {
       boardId: boardId!,
       columnId: currentColumnId!,

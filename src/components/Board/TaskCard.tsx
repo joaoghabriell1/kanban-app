@@ -7,22 +7,29 @@ import { actions } from "../../consts/actions";
 interface Props {
   columnId: string | number;
 }
-const TaskCard = ({ title, subtasks, apiKey, columnId }: Task & Props) => {
+const TaskCard = ({ title, subtasks, id, columnId }: Task & Props) => {
   const { boardId } = useParams();
-  const totalSubtasks = Object.values(subtasks).length;
-  const totalCompleted = Object.values(subtasks).reduce((total, subtask) => {
-    if (subtask.completed) {
-      return (total += 1);
-    }
-    return total;
-  }, 0);
+  let totalSubtasks = 0;
+  let totalCompleted = 0;
+
+  if (subtasks) {
+    totalSubtasks = Object.values(subtasks).length;
+  }
+  if (totalCompleted) {
+    totalCompleted = Object.values(subtasks).reduce((total, subtask) => {
+      if (subtask.completed) {
+        return (total += 1);
+      }
+      return total;
+    }, 0);
+  }
 
   return (
     <>
       <Link
         to={`/${boardId ? boardId : "-"}/${
           actions.MANAGE_CURRENT_TASK
-        }/${columnId}/${apiKey}`}
+        }/${columnId}/${id}`}
       >
         <Li>
           <H4>{title}</H4>
